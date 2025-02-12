@@ -21,14 +21,18 @@ model Crop {
   harvestedAt DateTime?
   fieldId     String    @unique @db.ObjectId
   field       Field     @relation(fields: [fieldId], references: [id])
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }
 
 model Field {
-  id       String @id @default(auto()) @map("_id") @db.ObjectId
-  name     String
-  size     Float
-  location String
-  crops    Crop[]
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  size      Float
+  location  String
+  crops     Crop[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Machine {
@@ -37,22 +41,28 @@ model Machine {
   type         String
   purchaseDate DateTime
   condition    String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
 
 model Warehouse {
-  id       String  @id @default(auto()) @map("_id") @db.ObjectId
-  name     String
-  location String
-  capacity Int
-  contents String?
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  location  String
+  capacity  Int
+  contents  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Worker {
-  id      String   @id @default(auto()) @map("_id") @db.ObjectId
-  name    String
-  role    String
-  hiredAt DateTime
-  salary  Float
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  role      String
+  hiredAt   DateTime
+  salary    Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Animal {
@@ -61,4 +71,5 @@ model Animal {
   species   String
   birthDate DateTime
   health    String?
+  createdAt DateTime @default(now())
 }

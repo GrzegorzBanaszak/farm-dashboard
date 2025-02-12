@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { Nunito_Sans } from 'next/font/google';
+import StoreProvider from './StoreProvider';
 
 const nunitoSans = Nunito_Sans({
   subsets: ['latin'],
@@ -21,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="pl">
       <body className={`${nunitoSans.className} ${nunitoSans.variable}`}>
-        {children}
+        <StoreProvider>{children}</StoreProvider>
       </body>
     </html>
   );
