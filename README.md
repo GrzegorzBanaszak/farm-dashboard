@@ -132,9 +132,11 @@ Projekt wykorzystuje następujące technologie:
 - Historia chorób i leczenia
 - Zarządzanie paszami i planem żywieniowym
 
-## Diagram clas
+## Diagram klas
 
-![Diagram clas](img/diagram.png)
+![Diagram klas](img/diagram.png)
+
+[Szczegółowy diagram](https://dbdiagram.io/d/67b1aeed263d6cf9a04ece33)
 
 ## Modele Prisma
 
