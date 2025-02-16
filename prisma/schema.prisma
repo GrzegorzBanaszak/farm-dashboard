@@ -13,12 +13,26 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum CropType {
+  PSZENICA
+  ZIEMNIAK
+  JECZMIEN // odpowiada: jęczmień
+  KUKURYDZA
+  RYZ // odpowiada: ryż
+  SOJA
+  OWIES
+  ZYTNO // odpowiada: żyto
+  PROSO
+  BURAK
+}
+
 model Crop {
   id          String    @id @default(auto()) @map("_id") @db.ObjectId
   name        String
-  type        String
+  type        CropType
   plantedAt   DateTime
   harvestedAt DateTime?
+  yield       Int // Ilość zbiorów (np. ilość wyprodukowanego plonu)
   fieldId     String    @unique @db.ObjectId
   field       Field     @relation(fields: [fieldId], references: [id])
   createdAt   DateTime  @default(now())
@@ -35,14 +49,22 @@ model Field {
   updatedAt DateTime @updatedAt
 }
 
+enum MachineCondition {
+  NEW // Nowa
+  GOOD // Sprawna
+  FAIR // Średni stan
+  POOR // Zły stan
+  BROKEN // Zepsuta
+}
+
 model Machine {
-  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  id           String           @id @default(auto()) @map("_id") @db.ObjectId
   name         String
   type         String
   purchaseDate DateTime
-  condition    String
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  condition    MachineCondition
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
 }
 
 model Warehouse {
@@ -65,11 +87,33 @@ model Worker {
   updatedAt DateTime @updatedAt
 }
 
+enum Species {
+  COW // Krowa
+  SHEEP // Owca
+  PIG // Świnia
+  GOAT // Koza
+  CHICKEN // Kura
+  TURKEY // Indyk
+  DUCK // Kaczka
+  HORSE // Koń
+  DONKEY // Osioł
+  RABBIT // Królik
+}
+
+enum HealthStatus {
+  EXCELLENT // Doskonały
+  GOOD // Dobry
+  FAIR // Przeciętny
+  POOR // Słaby
+  CRITICAL // Krytyczny
+}
+
 model Animal {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  id        String        @id @default(auto()) @map("_id") @db.ObjectId
   name      String
-  species   String
+  species   Species
   birthDate DateTime
-  health    String?
-  createdAt DateTime @default(now())
+  health    HealthStatus? // Pole opcjonalne
+  number    Int // Numer identyfikacyjny zwierzęcia
+  createdAt DateTime      @default(now())
 }

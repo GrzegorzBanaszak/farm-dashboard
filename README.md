@@ -21,6 +21,10 @@ Projekt wykorzystuje następujące technologie:
 - **Raporty i analizy** – generowanie raportów dotyczących wydajności i kosztów
 - **Kalendarz zadań** – planowanie prac polowych i harmonogramu działań
 
+## Projekt graficzny
+
+**Figma:** [Link](https://www.figma.com/design/guX7cNrLpVMqYbFrD9UhHm/Farm-Dashboard?node-id=164-75&t=FSwea2TUMQbAwJLR-0)
+
 ## Instalacja
 
 1. **Klonowanie repozytorium**
@@ -128,19 +132,43 @@ Projekt wykorzystuje następujące technologie:
 - Historia chorób i leczenia
 - Zarządzanie paszami i planem żywieniowym
 
+## Diagram clas
+
+![Diagram clas](img/diagram.png)
+
 ## Modele Prisma
 
 ### Model `Crop` (Uprawa)
 
 ```prisma
 model Crop {
-  id          String   @id @default(auto())
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
   name        String
-  type        String
+  type        CropType
   plantedAt   DateTime
   harvestedAt DateTime?
-  fieldId     String
+  yield       Int // Ilość zbiorów (np. ilość wyprodukowanego plonu)
+  fieldId     String    @unique @db.ObjectId
   field       Field     @relation(fields: [fieldId], references: [id])
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+```
+
+### Enum `CropType` (Typ uprawy)
+
+```prisma
+enum CropType {
+  PSZENICA
+  ZIEMNIAK
+  JECZMIEN // odpowiada: jęczmień
+  KUKURYDZA
+  RYZ // odpowiada: ryż
+  SOJA
+  OWIES
+  ZYTNO // odpowiada: żyto
+  PROSO
+  BURAK
 }
 ```
 
@@ -148,11 +176,25 @@ model Crop {
 
 ```prisma
 model Field {
-  id        String   @id @default(auto())
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
   name      String
   size      Float
   location  String
   crops     Crop[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+```
+
+### Enum `MachineCondition` (Stan maszyny)
+
+```prisma
+enum MachineCondition {
+  NEW // Nowa
+  GOOD // Sprawna
+  FAIR // Średni stan
+  POOR // Zły stan
+  BROKEN // Zepsuta
 }
 ```
 
@@ -160,13 +202,13 @@ model Field {
 
 ```prisma
 model Machine {
-  id          String   @id @default(auto())
-  name        String
-  type        String
+  id           String           @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  type         String
   purchaseDate DateTime
-  condition   String
-  farmId      String
-  farm        Farm     @relation(fields: [farmId], references: [id])
+  condition    MachineCondition
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
 }
 ```
 
@@ -174,11 +216,13 @@ model Machine {
 
 ```prisma
 model Warehouse {
-  id        String   @id @default(auto())
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
   name      String
   location  String
   capacity  Int
   contents  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 ```
 
@@ -186,13 +230,42 @@ model Warehouse {
 
 ```prisma
 model Worker {
-  id        String   @id @default(auto())
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
   name      String
   role      String
   hiredAt   DateTime
   salary    Float
-  farmId    String
-  farm      Farm     @relation(fields: [farmId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+```
+
+### Enum `Species` (Gatunek)
+
+```prisma
+enum Species {
+  COW // Krowa
+  SHEEP // Owca
+  PIG // Świnia
+  GOAT // Koza
+  CHICKEN // Kura
+  TURKEY // Indyk
+  DUCK // Kaczka
+  HORSE // Koń
+  DONKEY // Osioł
+  RABBIT // Królik
+}
+```
+
+### Enum `HealthStatus` (Stan zdrowia)
+
+```prisma
+enum HealthStatus {
+  EXCELLENT // Doskonały
+  GOOD // Dobry
+  FAIR // Przeciętny
+  POOR // Słaby
+  CRITICAL // Krytyczny
 }
 ```
 
@@ -200,14 +273,15 @@ model Worker {
 
 ```prisma
 model Animal {
-  id        String   @id @default(auto())
+  id        String        @id @default(auto()) @map("_id") @db.ObjectId
   name      String
-  species   String
+  species   Species
   birthDate DateTime
-  health    String?
-  farmId    String
-  farm      Farm     @relation(fields: [farmId], references: [id])
+  health    HealthStatus? // Pole opcjonalne
+  number    Int // Numer identyfikacyjny zwierzęcia
+  createdAt DateTime      @default(now())
 }
+
 ```
 
 ## Przyszłe usprawnienia
