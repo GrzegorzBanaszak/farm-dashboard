@@ -1,0 +1,117 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  email       String
+  hashPasswor String
+  firstName   String?
+  lastName    String?
+}
+
+enum CropType {
+  PSZENICA
+  ZIEMNIAK
+  JECZMIEN // odpowiada: jęczmień
+  KUKURYDZA
+  RYZ // odpowiada: ryż
+  SOJA
+  OWIES
+  ZYTNO // odpowiada: żyto
+  PROSO
+  BURAK
+}
+
+model Crop {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  type        CropType
+  plantedAt   DateTime
+  harvestedAt DateTime?
+  yield       Int // Ilość zbiorów (np. ilość wyprodukowanego plonu)
+  fieldId     String    @unique @db.ObjectId
+  field       Field     @relation(fields: [fieldId], references: [id])
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Field {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  size      Float
+  location  String
+  crops     Crop[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum MachineCondition {
+  NEW // Nowa
+  GOOD // Sprawna
+  FAIR // Średni stan
+  POOR // Zły stan
+  BROKEN // Zepsuta
+}
+
+model Machine {
+  id           String           @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  type         String
+  purchaseDate DateTime
+  condition    MachineCondition
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+}
+
+model Warehouse {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  location  String
+  capacity  Int
+  contents  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Species {
+  COW // Krowa
+  SHEEP // Owca
+  PIG // Świnia
+  GOAT // Koza
+  CHICKEN // Kura
+  TURKEY // Indyk
+  DUCK // Kaczka
+  HORSE // Koń
+  DONKEY // Osioł
+  RABBIT // Królik
+}
+
+enum HealthStatus {
+  EXCELLENT // Doskonały
+  GOOD // Dobry
+  FAIR // Przeciętny
+  POOR // Słaby
+  CRITICAL // Krytyczny
+}
+
+model Animal {
+  id        String        @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  species   Species
+  birthDate DateTime
+  health    HealthStatus? // Pole opcjonalne
+  number    Int // Numer identyfikacyjny zwierzęcia
+  createdAt DateTime      @default(now())
+}
