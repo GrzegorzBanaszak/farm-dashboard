@@ -107,11 +107,12 @@ enum HealthStatus {
 }
 
 model Animal {
-  id        String        @id @default(auto()) @map("_id") @db.ObjectId
+  id        String       @id @default(auto()) @map("_id") @db.ObjectId
   name      String
-  species   Species
+  specie    Species
   birthDate DateTime
-  health    HealthStatus? // Pole opcjonalne
+  health    HealthStatus // Pole opcjonalne
   number    Int // Numer identyfikacyjny zwierzęcia
-  createdAt DateTime      @default(now())
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
 }
