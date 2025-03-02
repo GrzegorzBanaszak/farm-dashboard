@@ -36,11 +36,10 @@ enum CropType {
 
 model Crop {
   id          String    @id @default(auto()) @map("_id") @db.ObjectId
-  name        String
   type        CropType
   plantedAt   DateTime
   harvestedAt DateTime?
-  yield       Int // Ilość zbiorów (np. ilość wyprodukowanego plonu)
+  yield       Int? // Ilość zbiorów (np. ilość wyprodukowanego plonu)
   fieldId     String    @unique @db.ObjectId
   field       Field     @relation(fields: [fieldId], references: [id])
   createdAt   DateTime  @default(now())
