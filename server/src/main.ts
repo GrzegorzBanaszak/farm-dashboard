@@ -19,6 +19,11 @@ async function bootstrap() {
     .setDescription('The Farm Management Dashboard API description')
     .setVersion('1.0')
     .addTag('Farm Management Dashboard')
+    .addBearerAuth({
+      type: 'http',
+      scheme: 'bearer',
+      bearerFormat: 'JWT',
+    })
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, documentFactory);

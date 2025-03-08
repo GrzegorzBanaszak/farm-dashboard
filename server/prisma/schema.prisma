@@ -14,11 +14,11 @@ datasource db {
 }
 
 model User {
-  id          String  @id @default(auto()) @map("_id") @db.ObjectId
-  email       String
-  hashPasswor String
-  firstName   String?
-  lastName    String?
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  email     String  @unique
+  password  String
+  firstName String?
+  lastName  String?
 }
 
 enum CropType {
