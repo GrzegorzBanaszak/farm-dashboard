@@ -4,6 +4,7 @@ import { WarehouseDto } from './dto/warehouse.dto';
 import { plainToInstance } from 'class-transformer';
 import { CreateWarehouseDto } from './dto/create-warehouse.dto';
 import { UpdateWarehouseDto } from './dto/update-warehouse.dto';
+import { ItemDto } from 'src/item/dto/item.dto';
 
 @Injectable()
 export class WarehouseService {
@@ -33,6 +34,24 @@ export class WarehouseService {
       return warehouseDto;
     } catch (error) {
       throw new NotFoundException('Nie znaleziono magazynu');
+    }
+  }
+
+  async getWarehouseItems(id: string): Promise<Array<ItemDto>> {
+    try {
+      const warehouse = await this.prisma.warehouse.findUnique({
+        where: { id },
+        include: { items: true },
+      });
+
+      if (!warehouse) throw new NotFoundException('Nie znaleziono magazynu');
+      const warehouseItemsDto = plainToInstance(ItemDto, warehouse.items, {
+        excludeExtraneousValues: true,
+      });
+
+      return warehouseItemsDto;
+    } catch (error) {
+      throw new NotFoundException('Nie znaleziono przedmiotów');
     }
   }
 
@@ -70,6 +89,12 @@ export class WarehouseService {
 
   async delete(id: string) {
     try {
+      const items = await this.prisma.item.findMany({
+        where: { warehouseId: id },
+      });
+      if (items.length !== 0)
+        throw new NotFoundException('Magazyn nie jest pusty');
+
       const warehouse = await this.prisma.warehouse.delete({ where: { id } });
       const warehouseDto: WarehouseDto = plainToInstance(
         WarehouseDto,

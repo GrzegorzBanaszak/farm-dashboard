@@ -11,6 +11,7 @@ import { WarehouseService } from './warehouse.service';
 import { WarehouseDto } from './dto/warehouse.dto';
 import { CreateWarehouseDto } from './dto/create-warehouse.dto';
 import { UpdateWarehouseDto } from './dto/update-warehouse.dto';
+import { ItemDto } from '../item/dto/item.dto';
 
 @Controller('warehouse')
 export class WarehouseController {
@@ -24,6 +25,11 @@ export class WarehouseController {
   @Get(':id')
   async getOne(@Param('id') id: string): Promise<WarehouseDto> {
     return await this.warehouseService.getOne(id);
+  }
+
+  @Get(':id/items')
+  async getItems(@Param('id') id: string): Promise<Array<ItemDto>> {
+    return await this.warehouseService.getWarehouseItems(id);
   }
 
   @Post()
