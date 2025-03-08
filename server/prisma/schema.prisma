@@ -75,13 +75,19 @@ model Machine {
 }
 
 model Warehouse {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  name      String
-  location  String
-  capacity  Int
-  contents  String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id      String  @id @default(auto()) @map("_id") @db.ObjectId
+  name    String
+  address String? // opcjonalny adres magazynu
+  items   Item[] // relacja: magazyn może zawierać wiele przedmiotów
+}
+
+model Item {
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  description String? // opcjonalny opis przedmiotu
+  quantity    Int
+  warehouse   Warehouse? @relation(fields: [warehouseId], references: [id])
+  warehouseId String?    @db.ObjectId
 }
 
 enum Species {

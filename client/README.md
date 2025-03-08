@@ -10,7 +10,7 @@ Przykładowy układ dashboardu opartego na poniższych modelach (User, Crop, Fie
 
 - **Logo i Nazwa Aplikacji** – wizualna identyfikacja systemu.
 
-- **Powiadomienia i Profil Użytkownika** – dostęp do informacji o zalogowanym użytkowniku (np. imię, email) oraz powiadomienia (np. alerty o zbliżających się terminach zbiorów czy przeglądzie maszyn).
+- **Profil Użytkownika** – dostęp do informacji o zalogowanym użytkowniku (np. imię, email).
 
 Dodatkowe
 
