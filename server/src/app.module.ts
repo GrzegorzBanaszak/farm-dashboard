@@ -9,9 +9,10 @@ import { WarehouseModule } from './warehouse/warehouse.module';
 import { ItemModule } from './item/item.module';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
+import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
-  imports: [FieldModule, AnimalModule, MachineModule, CropModule, WarehouseModule, ItemModule, UserModule, AuthModule],
+  imports: [FieldModule, AnimalModule, MachineModule, CropModule, WarehouseModule, ItemModule, UserModule, AuthModule, PrismaModule],
   controllers: [],
   providers: [PrismaService],
 })

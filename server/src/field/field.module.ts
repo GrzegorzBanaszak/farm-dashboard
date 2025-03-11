@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
 import { FieldController } from './field.controller';
 import { FieldService } from './field.service';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaModule } from 'src/prisma/prisma.module';
 
 @Module({
+  imports: [PrismaModule],
   controllers: [FieldController],
-  providers: [FieldService, PrismaService],
+  providers: [FieldService],
 })
 export class FieldModule {}
