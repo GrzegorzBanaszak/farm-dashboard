@@ -81,6 +81,76 @@ Po stronie klienta:
 - Dodanie zadań do wykonania
 - Obsługa wielu użytkowników i uprawnień
 
+## Stan Projektu
+
+#### Client
+
+- [ ] Strona główna
+  - [ ] Strona otwarcia
+  - [ ] O Nas
+  - [ ] Funkcje
+  - [ ] Cennik
+  - [ ] Kontakt
+- [ ] Logowanie
+- [ ] Rejestracja
+- [ ] Dashboard
+  - [ ] Strona głowna statystyki
+  - [ ] Pola
+    - [ ] Reducer i akcje
+    - [ ] Wyswietlanie listy pol
+    - [ ] Widok szczegolowy pola
+    - [ ] Dodanie nowego pola
+    - [ ] Edycja pola
+  - [ ] Uprawy
+    - [ ] Reducer i akcje
+    - [ ] Wyswietlanie listy upraw
+    - [ ] Widok szczegolowy uprawy
+    - [ ] Dodanie nowej uprawy
+    - [ ] Edycja uprawy
+  - [ ] Maszyny
+    - [ ] Reducer i akcje
+    - [ ] Wyswietlanie listy maszyn
+    - [ ] Widok szczegolowy maszyny
+    - [ ] Dodanie nowej maszyny
+  - [ ] Zwierzeta
+    - [ ] Reducer i akcje
+    - [ ] Wyswietlanie listy zwierzat
+    - [ ] Widok szczegolowy zwierzeta
+    - [ ] Dodanie nowego zwierzeta
+    - [ ] Edycja zwierzeta
+  - [ ] Magazyny
+    - [ ] Reducer i akcje
+    - [ ] Wyswietlanie listy magazynow
+    - [ ] Widok szczegolowy magazynu
+    - [ ] Dodanie nowego magazynu
+  - [ ] Przedmioty
+    - [ ] Reducer i akcje
+    - [ ] Wyswietlanie listy przedmiotow
+    - [ ] Widok szczegolowy przedmiotu
+    - [ ] Dodanie nowego przedmiotu
+    - [ ] Edycja przedmiotu
+
+#### Server
+
+- [x] Logowanie
+- [x] Rejestracja
+- [x] Pobranie użytkownikow 🔒
+- [x] Pola
+  - [x] Operacje CRUD
+- [x] Uprawy
+  - [x] Operacje CRUD
+- [x] Maszyny
+  - [x] Operacje CRUD
+  - [x] Aktualizacja stanu maszyny
+- [x] Zwierzeta
+  - [x] Operacje CRUD
+  - [x] Aktualizacja stanu zdrowia
+- [x] Magazyny
+  - [x] Operacje CRUD
+  - [x] Pobranie przedmiotów z magazynu
+- [x] Przedmioty
+  - [x] Operacje CRUD
+
 ## Licencja
 
 Projekt jest dostępny na licencji MIT.
