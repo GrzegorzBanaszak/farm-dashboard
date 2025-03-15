@@ -3,11 +3,12 @@ import PolaState from "./types/PolaState";
 import { polaThunk } from "./polaThunk";
 import mapToRecord from "../../utils/mapToRecord";
 import PolaSchema from "./types/PolaSchema";
+import LoadingState from "../../types/LoadingState";
 
 const initialState: PolaState = {
   pola: {
     data: {},
-    state: { loading: true, error: false, messages: [] },
+    state: { loading: LoadingState.IDLE, error: false, messages: [] },
   },
   poleDetails: {
     data: {
@@ -16,11 +17,11 @@ const initialState: PolaState = {
       size: 0,
       location: "",
     },
-    state: { loading: true, error: false, messages: [] },
+    state: { loading: LoadingState.IDLE, error: false, messages: [] },
   },
-  poleCreateState: { loading: false, error: false, messages: [] },
-  poleUpdateState: { loading: false, error: false, messages: [] },
-  poleRemoveState: { loading: false, error: false, messages: [] },
+  poleCreateState: { loading: LoadingState.IDLE, error: false, messages: [] },
+  poleUpdateState: { loading: LoadingState.IDLE, error: false, messages: [] },
+  poleRemoveState: { loading: LoadingState.IDLE, error: false, messages: [] },
 };
 
 const polaSlice = createSlice({
@@ -32,12 +33,16 @@ const polaSlice = createSlice({
     builder
       .addCase(polaThunk.getAll.fulfilled, (state, action) => {
         state.pola.data = mapToRecord<PolaSchema>(action.payload);
-        state.pola.state = { loading: false, error: false, messages: [] };
+        state.pola.state = {
+          loading: LoadingState.SUCCEEDED,
+          error: false,
+          messages: [],
+        };
       })
       .addCase(polaThunk.getAll.rejected, (state, _) => {
         state.pola.data = {};
         state.pola.state = {
-          loading: false,
+          loading: LoadingState.FAILED,
           error: true,
           messages: [],
         };
@@ -48,7 +53,7 @@ const polaSlice = createSlice({
       .addCase(polaThunk.getOne.fulfilled, (state, action) => {
         state.poleDetails.data = action.payload;
         state.poleDetails.state = {
-          loading: false,
+          loading: LoadingState.SUCCEEDED,
           error: false,
           messages: [],
         };
@@ -62,7 +67,7 @@ const polaSlice = createSlice({
         };
         console.log(actions);
         state.poleDetails.state = {
-          loading: false,
+          loading: LoadingState.FAILED,
           error: true,
           messages: [actions.payload as string],
         };
@@ -72,11 +77,15 @@ const polaSlice = createSlice({
     builder
       .addCase(polaThunk.create.fulfilled, (state, action) => {
         state.pola.data[action.payload.id] = action.payload;
-        state.poleCreateState = { loading: false, error: false, messages: [] };
+        state.poleCreateState = {
+          loading: LoadingState.SUCCEEDED,
+          error: false,
+          messages: [],
+        };
       })
       .addCase(polaThunk.create.rejected, (state, actions) => {
         state.poleCreateState = {
-          loading: false,
+          loading: LoadingState.FAILED,
           error: true,
           messages: [...(actions.payload as string[])],
         };
@@ -85,11 +94,15 @@ const polaSlice = createSlice({
     builder
       .addCase(polaThunk.update.fulfilled, (state, action) => {
         state.pola.data[action.payload.id] = action.payload;
-        state.poleUpdateState = { loading: false, error: false, messages: [] };
+        state.poleUpdateState = {
+          loading: LoadingState.SUCCEEDED,
+          error: false,
+          messages: [],
+        };
       })
       .addCase(polaThunk.update.rejected, (state, actions) => {
         state.poleUpdateState = {
-          loading: false,
+          loading: LoadingState.FAILED,
           error: true,
           messages: [...(actions.payload as string[])],
         };
@@ -98,11 +111,15 @@ const polaSlice = createSlice({
     builder
       .addCase(polaThunk.remove.fulfilled, (state, action) => {
         delete state.pola.data[action.payload.id];
-        state.poleRemoveState = { loading: false, error: false, messages: [] };
+        state.poleRemoveState = {
+          loading: LoadingState.SUCCEEDED,
+          error: false,
+          messages: [],
+        };
       })
       .addCase(polaThunk.remove.rejected, (state, actions) => {
         state.poleRemoveState = {
-          loading: false,
+          loading: LoadingState.FAILED,
           error: true,
           messages: [...(actions.payload as string[])],
         };

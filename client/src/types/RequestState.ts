@@ -1,5 +1,7 @@
+import LoadingState from "./LoadingState";
+
 export default interface RequestState {
-  loading: boolean;
+  loading: LoadingState;
   error: boolean;
   messages: string[];
 }
