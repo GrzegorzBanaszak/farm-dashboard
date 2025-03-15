@@ -14,6 +14,12 @@ async function bootstrap() {
     }),
   );
 
+  app.enableCors({
+    origin: 'http://localhost:5173', // adres, pod którym działa Twoja aplikacja React
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    credentials: true, // włącz, jeśli przesyłasz ciasteczka lub nagłówki autoryzacyjne
+  });
+
   const config = new DocumentBuilder()
     .setTitle('Farm Management Dashboard API')
     .setDescription('The Farm Management Dashboard API description')
