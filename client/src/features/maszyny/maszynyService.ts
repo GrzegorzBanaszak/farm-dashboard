@@ -3,6 +3,7 @@ import { constants } from "../../utils/constants";
 import MaszynySchema from "./types/MaszynySchema";
 import AddMaszynySchema from "./types/AddMaszynySchema";
 import UpdateMaszynySchema from "./types/UpdateMaszynySchema";
+import { MachineCondition } from "./types/MachineCondition";
 
 const MASZYNY_URL = `${constants.API_URL}/machine`;
 
@@ -34,4 +35,19 @@ const remove = async (id: string): Promise<MaszynySchema> => {
   return res.data;
 };
 
-export const maszynyService = { getAll, getOne, create, update, remove };
+const updateMachineCondition = async (
+  id: string,
+  data: { condition: MachineCondition }
+): Promise<any> => {
+  const res = await axios.patch(`${MASZYNY_URL}/${id}/condition`, data);
+  return res.data;
+};
+
+export const maszynyService = {
+  getAll,
+  getOne,
+  create,
+  update,
+  remove,
+  updateMachineCondition,
+};

@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { maszynyService } from "./maszynyService";
 import AddMaszynySchema from "./types/AddMaszynySchema";
 import UpdateMaszynySchema from "./types/UpdateMaszynySchema";
+import { MachineCondition } from "./types/MachineCondition";
 
 const getAll = createAsyncThunk("maszyny/getAll", async (_, thunkAPI) => {
   try {
@@ -70,4 +71,30 @@ const remove = createAsyncThunk(
   }
 );
 
-export const maszynyThunk = { getAll, getOne, create, update, remove };
+const updateMachineCondition = createAsyncThunk(
+  "maszyny/updateMachineCondition",
+  async (
+    data: { id: string; data: { condition: MachineCondition } },
+    thunkAPI
+  ) => {
+    try {
+      const resData = await maszynyService.updateMachineCondition(data.id, {
+        condition: data.data.condition,
+      });
+      return resData;
+    } catch (error: any) {
+      const message =
+        error.response.data.message || error.message || error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+export const maszynyThunk = {
+  getAll,
+  getOne,
+  create,
+  update,
+  remove,
+  updateMachineCondition,
+};

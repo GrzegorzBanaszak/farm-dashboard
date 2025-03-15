@@ -4,6 +4,7 @@ import MaszynyState from "./types/MaszynyState";
 import { maszynyThunk } from "./maszynyThunk";
 import mapToRecord from "../../utils/mapToRecord";
 import MaszynySchema from "./types/MaszynySchema";
+import { MachineCondition } from "./types/MachineCondition";
 
 const initialState: MaszynyState = {
   maszyny: {
@@ -16,7 +17,7 @@ const initialState: MaszynyState = {
       name: "",
       type: "",
       purchaseDate: new Date().toISOString(),
-      condition: "",
+      condition: MachineCondition.NEW,
     },
     state: { loading: LoadingState.IDLE, error: false, messages: [] },
   },
@@ -71,7 +72,7 @@ const maszynySlice = createSlice({
           name: "",
           type: "",
           purchaseDate: new Date(),
-          condition: "",
+          condition: MachineCondition.NEW,
         };
         state.maszynaDetails.state.loading = LoadingState.FAILED;
       });
@@ -117,6 +118,16 @@ const maszynySlice = createSlice({
         state.maszynaRemoveState.messages = [action.payload as string];
         state.maszynaRemoveState.loading = LoadingState.FAILED;
       });
+
+    //Aktualizacja kondycji maszyny
+    builder.addCase(
+      maszynyThunk.updateMachineCondition.fulfilled,
+      (state, action) => {
+        if (!state.maszyny.data[action.payload.id]) return;
+        state.maszyny.data[action.payload.id].condition =
+          action.payload.condition;
+      }
+    );
   },
 });
 
