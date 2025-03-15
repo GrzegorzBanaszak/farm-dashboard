@@ -1,7 +1,9 @@
 import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
-
+import poleReducer from "../features/pola/polaSlice";
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    pole: poleReducer,
+  },
 });
 
 export type AppDispatch = typeof store.dispatch;
