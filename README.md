@@ -96,7 +96,7 @@ Po stronie klienta:
 - [ ] Dashboard
   - [ ] Strona głowna statystyki
   - [ ] Pola
-    - [ ] Reducer i akcje
+    - [x] Reducer i akcje
     - [ ] Wyswietlanie listy pol
     - [ ] Widok szczegolowy pola
     - [ ] Dodanie nowego pola
