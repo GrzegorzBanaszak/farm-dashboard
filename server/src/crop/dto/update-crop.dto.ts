@@ -1,8 +1,8 @@
-import { Optional } from '@nestjs/common';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { CropType } from '@prisma/client';
 import {
   IsDate,
+  IsEnum,
   IsNotEmpty,
   IsNumber,
   IsOptional,
@@ -15,7 +15,7 @@ export class UpdateCropDto {
     enum: CropType,
     enumName: 'Typ rośliny',
   })
-  @IsString()
+  @IsEnum(CropType)
   @IsNotEmpty()
   type: CropType;
 
@@ -31,13 +31,15 @@ export class UpdateCropDto {
   })
   @IsDate()
   @IsOptional()
-  harvestAt?: Date;
+  @ApiPropertyOptional()
+  harvestedAt?: Date;
 
   @ApiProperty({
     description: 'Zebrana ilość',
   })
   @IsNumber()
   @IsOptional()
+  @ApiPropertyOptional()
   yield?: number;
 
   @ApiProperty({

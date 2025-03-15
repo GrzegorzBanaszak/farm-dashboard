@@ -1,4 +1,9 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CropDto } from './dto/crop.dto';
 import { plainToInstance } from 'class-transformer';
@@ -40,18 +45,25 @@ export class CropService {
   }
 
   async add(data: CreateCropDto) {
-    const field = await this.prisma.field.findUnique({
-      where: { id: data.fieldId },
-    });
+    try {
+      const field = await this.prisma.field.findUnique({
+        where: { id: data.fieldId },
+      });
 
-    if (!field) throw new NotFoundException('Nie znaleziono pola');
+      if (!field) throw new NotFoundException('Nie znaleziono pola');
 
-    const crop = await this.prisma.crop.create({ data });
+      const crop = await this.prisma.crop.create({
+        data,
+        include: { field: true },
+      });
 
-    const cropDto: CropDto = plainToInstance(CropDto, crop, {
-      excludeExtraneousValues: true,
-    });
-    return crop;
+      const cropDto: CropDto = plainToInstance(CropDto, crop, {
+        excludeExtraneousValues: true,
+      });
+      return cropDto;
+    } catch (error) {
+      throw new BadRequestException('Nie wszystkie dane sa poprawne');
+    }
   }
 
   async update(id: string, data: UpdateCropDto) {
@@ -59,25 +71,29 @@ export class CropService {
       const crop = await this.prisma.crop.update({
         where: { id },
         data,
+        include: { field: true },
       });
       const cropDto: CropDto = plainToInstance(CropDto, crop, {
         excludeExtraneousValues: true,
       });
       return cropDto;
     } catch (error) {
-      throw new NotFoundException('Nie znaleziono uprawy');
+      throw new BadRequestException('Błąd przy aktualizacji uprawy');
     }
   }
 
   async delete(id: string): Promise<CropDto> {
     try {
-      const crop = await this.prisma.crop.delete({ where: { id } });
+      const crop = await this.prisma.crop.delete({
+        where: { id },
+        include: { field: true },
+      });
       const cropDto: CropDto = plainToInstance(CropDto, crop, {
         excludeExtraneousValues: true,
       });
       return cropDto;
     } catch (error) {
-      throw new NotFoundException('Nie znaleziono uprawy');
+      throw new BadRequestException('Nie udało się usunąć uprawy');
     }
   }
 }

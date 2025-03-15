@@ -7,10 +7,20 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiResponse,
+  ApiParam,
+  ApiBody,
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiNotFoundResponse,
+} from '@nestjs/swagger';
 import { CropService } from './crop.service';
 import { CreateCropDto } from './dto/create-crop.dto';
 import { UpdateCropDto } from './dto/update-crop.dto';
+import { CropDto } from './dto/crop.dto';
 
 @ApiTags('Zbiory')
 @Controller('crop')
@@ -18,27 +28,81 @@ export class CropController {
   constructor(private readonly cropService: CropService) {}
 
   @Get()
-  async getAll() {
+  @ApiOperation({ summary: 'Pobierz wszystkie zbiory' })
+  @ApiOkResponse({
+    description: 'Lista wszystkich zbiorów została pomyślnie zwrócona',
+    type: [CropDto],
+  })
+  async getAll(): Promise<CropDto[]> {
     return await this.cropService.getAll();
   }
 
   @Get(':id')
-  async getOne(@Param('id') id: string) {
+  @ApiOperation({ summary: 'Pobierz jeden zbiór' })
+  @ApiParam({
+    name: 'id',
+    description: 'Identyfikator zbioru',
+    type: 'string',
+  })
+  @ApiOkResponse({
+    description: 'Zbiór został pomyślnie znaleziony',
+    type: CropDto,
+  })
+  @ApiNotFoundResponse({ description: 'Zbiór nie został znaleziony' })
+  async getOne(@Param('id') id: string): Promise<CropDto> {
     return await this.cropService.getOne(id);
   }
 
   @Post()
-  async add(@Body() data: CreateCropDto) {
+  @ApiOperation({ summary: 'Dodaj nowy zbiór' })
+  @ApiBody({
+    description: 'Dane nowego zbioru',
+    type: CreateCropDto,
+  })
+  @ApiCreatedResponse({
+    description: 'Zbiór został pomyślnie utworzony',
+    type: CropDto,
+  })
+  async add(@Body() data: CreateCropDto): Promise<CropDto> {
     return await this.cropService.add(data);
   }
 
   @Put(':id')
-  async update(@Param('id') id: string, @Body() data: UpdateCropDto) {
+  @ApiOperation({ summary: 'Aktualizuj istniejący zbiór' })
+  @ApiParam({
+    name: 'id',
+    description: 'Identyfikator zbioru do aktualizacji',
+    type: 'string',
+  })
+  @ApiBody({
+    description: 'Dane do aktualizacji zbioru',
+    type: UpdateCropDto,
+  })
+  @ApiOkResponse({
+    description: 'Zbiór został pomyślnie zaktualizowany',
+    type: CropDto,
+  })
+  @ApiNotFoundResponse({ description: 'Zbiór nie został znaleziony' })
+  async update(
+    @Param('id') id: string,
+    @Body() data: UpdateCropDto,
+  ): Promise<CropDto> {
     return await this.cropService.update(id, data);
   }
 
   @Delete(':id')
-  async delete(@Param('id') id: string) {
+  @ApiOperation({ summary: 'Usuń zbiór' })
+  @ApiParam({
+    name: 'id',
+    description: 'Identyfikator zbioru do usunięcia',
+    type: 'string',
+  })
+  @ApiOkResponse({
+    description: 'Zbiór został pomyślnie usunięty',
+    type: CropDto,
+  })
+  @ApiNotFoundResponse({ description: 'Zbiór nie został znaleziony' })
+  async delete(@Param('id') id: string): Promise<CropDto> {
     return await this.cropService.delete(id);
   }
 }
