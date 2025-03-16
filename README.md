@@ -102,13 +102,13 @@ Po stronie klienta:
     - [ ] Dodanie nowego pola
     - [ ] Edycja pola
   - [ ] Uprawy
-    - [ ] Reducer i akcje
+    - [x] Reducer i akcje
     - [ ] Wyswietlanie listy upraw
     - [ ] Widok szczegolowy uprawy
     - [ ] Dodanie nowej uprawy
     - [ ] Edycja uprawy
   - [ ] Maszyny
-    - [ ] Reducer i akcje
+    - [x] Reducer i akcje
     - [ ] Wyswietlanie listy maszyn
     - [ ] Widok szczegolowy maszyny
     - [ ] Dodanie nowej maszyny
