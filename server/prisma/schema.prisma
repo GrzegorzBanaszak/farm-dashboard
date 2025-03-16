@@ -91,24 +91,24 @@ model Item {
 }
 
 enum Species {
-  COW // Krowa
-  SHEEP // Owca
-  PIG // Świnia
-  GOAT // Koza
-  CHICKEN // Kura
-  TURKEY // Indyk
-  DUCK // Kaczka
-  HORSE // Koń
-  DONKEY // Osioł
-  RABBIT // Królik
+  KROWA
+  OWCA
+  SWINIA
+  KOZA
+  KURA
+  INDYK
+  KACZKA
+  KON
+  OSIOL
+  KROLIK
 }
 
 enum HealthStatus {
-  EXCELLENT // Doskonały
-  GOOD // Dobry
-  FAIR // Przeciętny
-  POOR // Słaby
-  CRITICAL // Krytyczny
+  DOSKONALY
+  DOBRY
+  PRZECIETNY
+  SLABY
+  KRYTYCZNY
 }
 
 model Animal {
