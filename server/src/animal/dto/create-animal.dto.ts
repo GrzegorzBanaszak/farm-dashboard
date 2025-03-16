@@ -2,6 +2,7 @@ import { ApiProperty, ApiSchema } from '@nestjs/swagger';
 import { HealthStatus, Species } from '@prisma/client';
 import {
   IsDate,
+  IsEnum,
   IsNotEmpty,
   IsNumber,
   IsOptional,
@@ -17,6 +18,7 @@ export class CreateAnimalDto {
 
   @IsNotEmpty()
   @ApiProperty({ enum: Species, enumName: 'Gatunek' })
+  @IsEnum(Species)
   specie: Species;
 
   @IsOptional()
@@ -26,6 +28,7 @@ export class CreateAnimalDto {
 
   @IsOptional()
   @ApiProperty({ enum: HealthStatus, enumName: 'Stan zdrowia' })
+  @IsEnum(HealthStatus)
   health?: HealthStatus;
 
   @IsNumber()

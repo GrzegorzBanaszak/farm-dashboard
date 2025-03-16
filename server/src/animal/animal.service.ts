@@ -39,7 +39,7 @@ export class AnimalService {
     const animal = await this.prisma.animal.create({
       data: {
         ...data,
-        health: data.health ? data.health : HealthStatus.EXCELLENT,
+        health: data.health ? data.health : HealthStatus.DOSKONALY,
         birthDate: data.birthDate ? data.birthDate : new Date(),
       },
     });
