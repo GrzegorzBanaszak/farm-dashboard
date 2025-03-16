@@ -4,6 +4,7 @@ import { PrismaService } from '../prisma/prisma.service';
 import { RegisterDto } from './dto/register.dto';
 import * as bcrypt from 'bcrypt';
 import { LoginDto } from './dto/login.dto';
+import { AuthResponseDto } from './dto/auth-response.dto';
 
 @Injectable()
 export class AuthService {
@@ -12,7 +13,7 @@ export class AuthService {
     private prisma: PrismaService,
   ) {}
 
-  async register(registerDto: RegisterDto) {
+  async register(registerDto: RegisterDto): Promise<AuthResponseDto> {
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(registerDto.password, salt);
     const user = await this.prisma.user.create({
@@ -20,10 +21,15 @@ export class AuthService {
         email: registerDto.email,
         password: hashedPassword,
       },
+      select: {
+        id: true,
+        email: true,
+        firstName: true,
+        lastName: true,
+      },
     });
-
-    const { password, ...result } = user;
-    return result;
+    const payload = { username: user.email, sub: user.id };
+    return { accessToken: this.jwtService.sign(payload), user };
   }
 
   async validateUser(email: string, password: string) {
@@ -39,14 +45,12 @@ export class AuthService {
     return null;
   }
 
-  async login(loginDto: LoginDto) {
+  async login(loginDto: LoginDto): Promise<AuthResponseDto> {
     const user = await this.validateUser(loginDto.email, loginDto.password);
     if (!user) {
       throw new UnauthorizedException('Niepoprawne dane logowania');
     }
     const payload = { username: user.email, sub: user.id };
-    return {
-      access_token: this.jwtService.sign(payload),
-    };
+    return { accessToken: this.jwtService.sign(payload), user };
   }
 }
