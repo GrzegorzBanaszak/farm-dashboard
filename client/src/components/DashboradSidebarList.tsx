@@ -7,6 +7,7 @@ import PoleIcon from "../icons/PoleIcon";
 import MaszynyIcon from "../icons/MaszynyIcon";
 import MagazynIcon from "../icons/MagazynIcon";
 import ZwierzetaIcon from "../icons/ZwierzetaIcon";
+import LogoutSidebar from "./LogoutSidebar";
 
 const listElements: Array<DashboardSidebarListElementProps> = [
   {
@@ -52,6 +53,7 @@ const DashboradSidebarList = () => {
           path={element.path}
         />
       ))}
+      <LogoutSidebar />
     </>
   );
 };

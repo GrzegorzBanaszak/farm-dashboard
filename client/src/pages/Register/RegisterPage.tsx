@@ -1,8 +1,12 @@
+import { useAppDispatch, useAppSelector } from "@/app/hooks";
+import { authThunk } from "@/features/auth/authThunk";
 import RegisterSchema from "@/features/auth/types/RegisterSchema";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const RegisterPage = () => {
+  const dispatch = useAppDispatch();
+  const { registerState } = useAppSelector((state) => state.auth);
   const [formData, setFormData] = useState<RegisterSchema>({
     email: "",
     password: "",
@@ -19,8 +23,7 @@ const RegisterPage = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Rejestracja z danymi:", formData);
-    // Tutaj dodaj właściwą logikę rejestracji
+    dispatch(authThunk.register(formData));
   };
 
   return (
@@ -120,7 +123,11 @@ const RegisterPage = () => {
                 required
               />
             </div>
-
+            {registerState.error && (
+              <div className="text-red-500 font-black  my-4">
+                Nieprawidłowy dane rejestracji
+              </div>
+            )}
             <button
               type="submit"
               className="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-md transition duration-300 mt-4 cursor-pointer"

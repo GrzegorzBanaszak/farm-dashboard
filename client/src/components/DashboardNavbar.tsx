@@ -1,3 +1,4 @@
+import { useAppSelector } from "@/app/hooks";
 import { Menu, User } from "lucide-react";
 
 type DashboardNavbarProps = {
@@ -5,6 +6,7 @@ type DashboardNavbarProps = {
 };
 
 const DashboardNavbar: React.FC<DashboardNavbarProps> = ({ toggleSidebar }) => {
+  const { user } = useAppSelector((state) => state.auth);
   return (
     <header className="bg-white shadow-sm z-10">
       <div className="flex justify-between items-center px-4 py-3">
@@ -22,7 +24,7 @@ const DashboardNavbar: React.FC<DashboardNavbarProps> = ({ toggleSidebar }) => {
           </div>
         </div>
         <div className="flex items-center space-x-4">
-          <div>Jan Kowalski</div>
+          <div>{user?.email}</div>
           <div className="relative">
             <button className="cursor-pointer flex items-center p-2 rounded-full bg-gray-200">
               <User size={20} />

@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, Res } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
@@ -38,5 +38,19 @@ export class AuthController {
       path: '/',
     });
     return userData.user;
+  }
+
+  @Get('logout')
+  async logout(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
+    // Usuń cookie JWT
+    res.cookie('jwt', '', {
+      httpOnly: true,
+      sameSite: 'lax',
+      expires: new Date(0),
+      path: '/',
+      domain: 'localhost',
+    });
+
+    return { message: 'Wylogowano pomyślnie' };
   }
 }

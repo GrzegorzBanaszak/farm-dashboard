@@ -5,4 +5,5 @@ export default interface AuthState {
   user: UserSchema | null;
   registerState: RequestState;
   loginState: RequestState;
+  getUserState: RequestState;
 }

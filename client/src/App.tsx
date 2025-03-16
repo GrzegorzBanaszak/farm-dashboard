@@ -11,8 +11,10 @@ import UprawyPages from "./pages/DashboardPages/UprawyPages";
 import PolaPages from "./pages/DashboardPages/PolaPages";
 import MaszynyPages from "./pages/DashboardPages/MaszynyPages";
 import ZwierzetaPages from "./pages/DashboardPages/ZwierzetaPages";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
+import Login from "./pages/Login/Login";
+
+import ProtectionRoute from "./components/ProtectionRoute";
+import RegisterPage from "./pages/Register/RegisterPage";
 
 function App() {
   return (
@@ -33,8 +35,22 @@ function App() {
           <Route path="/dashboard/magazyny" element={<MaszynyPages />} />
           <Route path="/dashboard/zwierzeta" element={<ZwierzetaPages />} />
         </Route>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        <Route
+          path="/login"
+          element={
+            <ProtectionRoute pathTo="/dashboard/szczegoly">
+              <Login />
+            </ProtectionRoute>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <ProtectionRoute pathTo="/dashboard/szczegoly">
+              <RegisterPage />
+            </ProtectionRoute>
+          }
+        />
         <Route path="*" element={<div>404</div>} />
       </Routes>
     </BrowserRouter>
