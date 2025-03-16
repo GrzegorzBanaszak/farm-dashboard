@@ -1,10 +1,12 @@
 import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
 import poleReducer from "../features/pola/polaSlice";
 import maszynyReducer from "../features/maszyny/maszynySlice";
+import uprawyReducer from "../features/uprawy/uprawySlice";
 export const store = configureStore({
   reducer: {
     pole: poleReducer,
     maszyny: maszynyReducer,
+    uprawy: uprawyReducer,
   },
 });
 
