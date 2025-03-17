@@ -25,6 +25,10 @@ const ProtectionRoute: React.FC<ProtectionRouteProps> = ({
   };
 
   useEffect(() => {
+    if (user) {
+      nav(pathTo);
+      return;
+    }
     checkUser();
   }, [user]);
   return <> {children}</>;
