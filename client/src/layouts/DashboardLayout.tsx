@@ -10,25 +10,21 @@ const DashboardLayout = () => {
   const nav = useNavigate();
   const dispatch = useAppDispatch();
   const { getUserState } = useAppSelector((state) => state.auth);
-  const { user } = useAppSelector((state) => state.auth);
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
 
-  const checkUser = async () => {
-    if (!user) {
-      await dispatch(authThunk.getUser());
-      if (getUserState.loading === LoadingState.FAILED) {
-        nav("/login");
-      }
-    }
-  };
+  useEffect(() => {
+    dispatch(authThunk.getUser());
+  }, []);
 
   useEffect(() => {
-    checkUser();
-  }, []);
+    if (getUserState.loading === LoadingState.FAILED) {
+      nav("/login");
+    }
+  }, [getUserState.loading]);
 
   return (
     <div className="font-nunito flex flex-col h-screen bg-gray-100 ">
@@ -43,7 +39,7 @@ const DashboardLayout = () => {
 
         {/* Główna zawartość */}
         <main className="flex-1 overflow-y-auto p-4 bg-gray-100">
-          <div className="container mx-auto">
+          <div className="container mx-auto h-full">
             <Outlet />
           </div>
         </main>

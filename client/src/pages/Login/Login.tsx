@@ -4,11 +4,10 @@ import { authThunk } from "@/features/auth/authThunk";
 import LoginSchema from "@/features/auth/types/LoginSchema";
 import LoadingState from "@/types/LoadingState";
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const LoginPage = () => {
   const { loginState } = useAppSelector((state) => state.auth);
-  const nav = useNavigate();
   const dispatch = useAppDispatch();
   const [formData, setFormData] = useState<LoginSchema>({
     email: "",
@@ -27,10 +26,6 @@ const LoginPage = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     await dispatch(authThunk.login(formData));
-
-    if (loginState.loading === LoadingState.SUCCEEDED) {
-      nav("/dashboard/szczegoly");
-    }
   };
 
   return (

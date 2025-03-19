@@ -1,5 +1,6 @@
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { authThunk } from "@/features/auth/authThunk";
+import LoadingState from "@/types/LoadingState";
 
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -15,22 +16,24 @@ const ProtectionRoute: React.FC<ProtectionRouteProps> = ({
 }) => {
   const dispatch = useAppDispatch();
   const nav = useNavigate();
-  const { user } = useAppSelector((state) => state.auth);
-
-  const checkUser = async () => {
-    await dispatch(authThunk.getUser());
-    if (user) {
-      nav(pathTo);
-    }
-  };
+  const { getUserState, loginState } = useAppSelector((state) => state.auth);
 
   useEffect(() => {
-    if (user) {
+    dispatch(authThunk.getUser());
+  }, []);
+
+  useEffect(() => {
+    if (getUserState.loading === LoadingState.SUCCEEDED) {
       nav(pathTo);
-      return;
     }
-    checkUser();
-  }, [user]);
+  }, [getUserState.loading]);
+
+  useEffect(() => {
+    if (loginState.loading === LoadingState.SUCCEEDED) {
+      nav(pathTo);
+    }
+  }, [loginState.loading]);
+
   return <> {children}</>;
 };
 

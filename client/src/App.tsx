@@ -15,6 +15,7 @@ import Login from "./pages/Login/Login";
 
 import ProtectionRoute from "./components/ProtectionRoute";
 import RegisterPage from "./pages/Register/RegisterPage";
+import PolaDetailPage from "./pages/DashboardPages/PolaPages/PolaDetailPage";
 
 function App() {
   return (
@@ -30,7 +31,11 @@ function App() {
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route path="/dashboard/szczegoly" element={<DashboardDetails />} />
           <Route path="/dashboard/uprawy" element={<UprawyPages />} />
-          <Route path="/dashboard/pola" element={<PolaPages />} />
+          <Route path="/dashboard/pola">
+            <Route index element={<PolaPages />} />
+            <Route path=":itemId" element={<PolaDetailPage />} />
+          </Route>
+
           <Route path="/dashboard/maszyny" element={<MaszynyPages />} />
           <Route path="/dashboard/magazyny" element={<MaszynyPages />} />
           <Route path="/dashboard/zwierzeta" element={<ZwierzetaPages />} />
