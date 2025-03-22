@@ -16,6 +16,8 @@ const initialState: PolaState = {
       name: "",
       size: 0,
       location: "",
+      currentCropGrowing: null,
+      histroyCrops: [],
     },
     state: { loading: LoadingState.IDLE, error: false, messages: [] },
   },
@@ -27,10 +29,39 @@ const initialState: PolaState = {
 const polaSlice = createSlice({
   name: "pola",
   initialState,
-  reducers: {},
+  reducers: {
+    clearPoleAddState: (state) => {
+      state.poleCreateState = {
+        loading: LoadingState.IDLE,
+        error: false,
+        messages: [],
+      };
+    },
+    clearEditState: (state) => {
+      state.poleUpdateState = {
+        loading: LoadingState.IDLE,
+        error: false,
+        messages: [],
+      };
+    },
+    clearPoleDeleteState: (state) => {
+      state.poleRemoveState = {
+        loading: LoadingState.IDLE,
+        error: false,
+        messages: [],
+      };
+    },
+  },
   extraReducers: (builder: ActionReducerMapBuilder<PolaState>) => {
     //Pobieranie wszystkich pol
     builder
+      .addCase(polaThunk.getAll.pending, (state, _) => {
+        state.pola.state = {
+          loading: LoadingState.PENDING,
+          error: false,
+          messages: [],
+        };
+      })
       .addCase(polaThunk.getAll.fulfilled, (state, action) => {
         state.pola.data = mapToRecord<PolaSchema>(action.payload);
         state.pola.state = {
@@ -50,6 +81,13 @@ const polaSlice = createSlice({
 
     //Pobieranie pojedynczej pola
     builder
+      .addCase(polaThunk.getOne.pending, (state, _) => {
+        state.poleDetails.state = {
+          loading: LoadingState.PENDING,
+          error: false,
+          messages: [],
+        };
+      })
       .addCase(polaThunk.getOne.fulfilled, (state, action) => {
         state.poleDetails.data = action.payload;
         state.poleDetails.state = {
@@ -64,8 +102,9 @@ const polaSlice = createSlice({
           name: "",
           size: 0,
           location: "",
+          currentCropGrowing: null,
+          histroyCrops: [],
         };
-        console.log(actions);
         state.poleDetails.state = {
           loading: LoadingState.FAILED,
           error: true,
@@ -74,7 +113,15 @@ const polaSlice = createSlice({
       });
 
     //Dodawanie pola
+
     builder
+      .addCase(polaThunk.create.pending, (state, _) => {
+        state.poleCreateState = {
+          loading: LoadingState.PENDING,
+          error: false,
+          messages: [],
+        };
+      })
       .addCase(polaThunk.create.fulfilled, (state, action) => {
         state.pola.data[action.payload.id] = action.payload;
         state.poleCreateState = {
@@ -92,8 +139,14 @@ const polaSlice = createSlice({
       });
     //Edycja pola
     builder
-      .addCase(polaThunk.update.fulfilled, (state, action) => {
-        state.pola.data[action.payload.id] = action.payload;
+      .addCase(polaThunk.update.pending, (state, _) => {
+        state.poleUpdateState = {
+          loading: LoadingState.PENDING,
+          error: false,
+          messages: [],
+        };
+      })
+      .addCase(polaThunk.update.fulfilled, (state, _) => {
         state.poleUpdateState = {
           loading: LoadingState.SUCCEEDED,
           error: false,
@@ -127,5 +180,6 @@ const polaSlice = createSlice({
   },
 });
 
-export const {} = polaSlice.actions;
+export const { clearEditState, clearPoleDeleteState, clearPoleAddState } =
+  polaSlice.actions;
 export default polaSlice.reducer;

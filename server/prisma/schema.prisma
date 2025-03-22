@@ -34,26 +34,55 @@ enum CropType {
   BURAK
 }
 
+enum WorkType {
+  ORKA // Oranie pola
+  SIEW // Sianie nasion
+  NAWOZENIE // Nawożenie upraw
+  OPRYSK // Opryskiwanie pestycydami
+  NAWADNIANIE // Nawadnianie pola
+  ZBIOR // Zbiór plonów
+  KONSERWACJA // Konserwacja pola
+  INNE // Inne prace
+}
+
 model Crop {
-  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  id          String      @id @default(auto()) @map("_id") @db.ObjectId
   type        CropType
   plantedAt   DateTime
   harvestedAt DateTime?
   yield       Int? // Ilość zbiorów (np. ilość wyprodukowanego plonu)
-  fieldId     String    @unique @db.ObjectId
-  field       Field     @relation(fields: [fieldId], references: [id])
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  isGrowing   Boolean     @default(true) // Pole sygnalizujące czy uprawa aktualnie rośnie
+  fieldId     String      @db.ObjectId
+  field       Field       @relation(fields: [fieldId], references: [id])
+  fieldWorks  FieldWork[] // Relacja do prac wykonanych na tej uprawie
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
 }
 
 model Field {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  name      String
-  size      Float
-  location  String
-  crops     Crop[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id         String      @id @default(auto()) @map("_id") @db.ObjectId
+  name       String
+  size       Float
+  location   String
+  crops      Crop[]
+  fieldWorks FieldWork[] // Relacja do prac wykonanych na tym polu
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+}
+
+model FieldWork {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  type        WorkType
+  description String?
+  startDate   DateTime
+  endDate     DateTime?
+  cost        Float? // Koszt wykonania pracy (opcjonalny)
+  fieldId     String    @db.ObjectId
+  field       Field     @relation(fields: [fieldId], references: [id])
+  cropId      String?   @db.ObjectId // Opcjonalne - praca może być powiązana z konkretną uprawą
+  crop        Crop?     @relation(fields: [cropId], references: [id])
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }
 
 enum MachineCondition {

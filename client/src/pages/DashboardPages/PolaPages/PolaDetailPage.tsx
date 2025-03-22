@@ -1,15 +1,21 @@
 import ItemDetails from "@/components/ItemDetails";
 import PolaDetailDisplay from "./components/PolaDetailDisplay";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { polaThunk } from "@/features/pola/polaThunk";
+import DeleteConfirmationAndNotification from "@/components/DeleteConfirmationAndNotification";
+import { clearPoleDeleteState } from "@/features/pola/polaSlice";
 
 const PolaDetailPage = () => {
   // W rzeczywistej aplikacji ID byłoby pobierane z parametrów URL
   const { itemId = "" } = useParams();
+  const [displayDeleteConfirmation, setDisplayDeleteConfirmation] =
+    useState(false);
   const nav = useNavigate();
-  const { poleDetails } = useAppSelector((state) => state.pole);
+  const { poleDetails, poleRemoveState } = useAppSelector(
+    (state) => state.pola
+  );
   const dispatch = useAppDispatch();
 
   const getItemDetails = async () => {
@@ -21,29 +27,52 @@ const PolaDetailPage = () => {
   }, []);
 
   const handleBack = () => {
+    nav(-1);
+  };
+
+  const handleEdit = (itemId: string) => {
+    nav(`/dashboard/pola/${itemId}/edit`);
+  };
+
+  const toggleDeleteConfirmation = () => {
+    setDisplayDeleteConfirmation((state) => !state);
+  };
+
+  const afterDelete = () => {
+    dispatch(clearPoleDeleteState());
     nav("/dashboard/pola");
   };
 
-  const handleEdit = (item: any) => {
-    console.log("Edytuj przedmiot:", item);
-    // W rzeczywistej aplikacji: navigate(`/items/${item.id}/edit`);
-  };
-
   const handleDelete = (itemId: string) => {
-    console.log("Usuń przedmiot o ID:", itemId);
-    // W rzeczywistej aplikacji: pokazałby się dialog potwierdzenia
+    dispatch(polaThunk.remove(itemId));
   };
 
   return (
-    <ItemDetails
-      itemId={itemId}
-      onBack={handleBack}
-      onEdit={handleEdit}
-      onDelete={handleDelete}
-      detailComponent={<PolaDetailDisplay item={poleDetails.data} />}
-      loading={false}
-      item={poleDetails}
-    />
+    <>
+      <ItemDetails
+        itemId={itemId}
+        onBack={handleBack}
+        onEdit={handleEdit}
+        onDelete={toggleDeleteConfirmation}
+        detailComponent={<PolaDetailDisplay item={poleDetails.data} />}
+        loadingState={poleDetails.state.loading}
+        item={poleDetails.data}
+      />
+      {displayDeleteConfirmation && (
+        <DeleteConfirmationAndNotification
+          item={{
+            name: poleDetails.data.name,
+            id: poleDetails.data.id,
+            size: poleDetails.data.size,
+            location: poleDetails.data.location,
+          }}
+          onBack={toggleDeleteConfirmation}
+          onDelete={handleDelete}
+          afterDelete={afterDelete}
+          loadingState={poleRemoveState.loading}
+        />
+      )}
+    </>
   );
 };
 

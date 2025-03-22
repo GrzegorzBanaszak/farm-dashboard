@@ -3,6 +3,7 @@ import AddPoleSchema from "./types/AddPoleSchema";
 import EditPoleSchema from "./types/EditPoleSchema";
 import PolaSchema from "./types/PolaSchema";
 import axios from "axios";
+import PoleDetailSchema from "./types/PoleDetailSchema";
 
 const POLA_URL = `${constants.API_URL}/field`;
 
@@ -11,7 +12,7 @@ const getAll = async (): Promise<PolaSchema[]> => {
   return res.data;
 };
 
-const getOne = async (id: string): Promise<PolaSchema> => {
+const getOne = async (id: string): Promise<PoleDetailSchema> => {
   const res = await axios.get(`${POLA_URL}/${id}`);
   return res.data;
 };
@@ -25,6 +26,8 @@ const update = async (
   id: string,
   data: EditPoleSchema
 ): Promise<PolaSchema> => {
+  console.log(data);
+
   const res = await axios.put(`${POLA_URL}/${id}`, data);
   return res.data;
 };

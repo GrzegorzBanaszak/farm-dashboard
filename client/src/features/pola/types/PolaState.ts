@@ -1,5 +1,6 @@
 import RequestState from "../../../types/RequestState";
 import PolaSchema from "./PolaSchema";
+import PoleDetailSchema from "./PoleDetailSchema";
 
 export default interface PolaState {
   pola: {
@@ -7,7 +8,7 @@ export default interface PolaState {
     state: RequestState;
   };
   poleDetails: {
-    data: PolaSchema;
+    data: PoleDetailSchema;
     state: RequestState;
   };
   poleCreateState: RequestState;

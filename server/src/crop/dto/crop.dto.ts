@@ -29,9 +29,13 @@ export class CropDto {
   @Expose()
   yield?: number;
 
+  @ApiProperty({ description: 'Czy jest w trakcie zasiewu' })
+  @Expose()
+  isGrowing: boolean;
+
   @ApiProperty({ description: 'Pole', type: FieldDto })
   @Expose()
   @ValidateNested()
   @Type(() => FieldDto)
-  field: FieldDto;
+  field?: FieldDto;
 }

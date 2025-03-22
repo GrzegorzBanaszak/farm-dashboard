@@ -1,3 +1,4 @@
+import LoadingState from "@/types/LoadingState";
 import { ArrowLeft, Edit, Trash2 } from "lucide-react";
 
 interface ItemDetailsProps {
@@ -6,7 +7,7 @@ interface ItemDetailsProps {
   onEdit: (item: any) => void;
   onDelete: (id: string) => void;
   detailComponent: React.ReactNode;
-  loading: boolean;
+  loadingState: LoadingState;
   item: any;
 }
 
@@ -16,11 +17,11 @@ const ItemDetails: React.FC<ItemDetailsProps> = ({
   onEdit,
   onDelete,
   detailComponent,
-  loading,
+  loadingState,
   item,
 }) => {
   // Jeśli trwa ładowanie, wyświetl informację
-  if (loading) {
+  if (loadingState === LoadingState.PENDING) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen p-4">
         <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
@@ -30,7 +31,7 @@ const ItemDetails: React.FC<ItemDetailsProps> = ({
   }
 
   // Jeśli nie znaleziono przedmiotu
-  if (!item) {
+  if (loadingState === LoadingState.FAILED) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen p-4">
         <p className="text-xl text-gray-600">
@@ -63,14 +64,14 @@ const ItemDetails: React.FC<ItemDetailsProps> = ({
             </div>
             <div className="flex items-center space-x-2">
               <button
-                onClick={() => onEdit(item)}
+                onClick={() => onEdit(itemId)}
                 className="p-2 text-yellow-600 hover:text-yellow-800 rounded-full hover:bg-gray-100"
                 title="Edytuj"
               >
                 <Edit size={20} />
               </button>
               <button
-                onClick={() => onDelete(item.id)}
+                onClick={() => onDelete(itemId)}
                 className="p-2 text-red-600 hover:text-red-800 rounded-full hover:bg-gray-100"
                 title="Usuń"
               >
