@@ -7,7 +7,7 @@ import authReducer from "../features/auth/authSlice";
 
 export const store = configureStore({
   reducer: {
-    pole: poleReducer,
+    pola: poleReducer,
     maszyny: maszynyReducer,
     uprawy: uprawyReducer,
     zwierzeta: zwierzetaReducer,

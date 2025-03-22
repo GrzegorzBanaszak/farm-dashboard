@@ -7,5 +7,6 @@ import { PrismaModule } from 'src/prisma/prisma.module';
   imports: [PrismaModule],
   controllers: [CropController],
   providers: [CropService],
+  exports: [CropService],
 })
 export class CropModule {}

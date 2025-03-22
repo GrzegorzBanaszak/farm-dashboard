@@ -1,13 +1,11 @@
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { authThunk } from "@/features/auth/authThunk";
 import RegisterSchema from "@/features/auth/types/RegisterSchema";
-import LoadingState from "@/types/LoadingState";
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const RegisterPage = () => {
   const dispatch = useAppDispatch();
-  const nav = useNavigate();
   const { registerState } = useAppSelector((state) => state.auth);
   const [formData, setFormData] = useState<RegisterSchema>({
     email: "",
@@ -26,9 +24,6 @@ const RegisterPage = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     await dispatch(authThunk.register(formData));
-    if (registerState.loading === LoadingState.SUCCEEDED) {
-      nav("/dashboard/szczegoly");
-    }
   };
 
   return (

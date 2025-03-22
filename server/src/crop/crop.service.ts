@@ -96,4 +96,46 @@ export class CropService {
       throw new BadRequestException('Nie udało się usunąć uprawy');
     }
   }
+
+  async deleteAllByFieldId(fieldId: string): Promise<boolean> {
+    try {
+      const crops = await this.prisma.crop.deleteMany({
+        where: { fieldId },
+      });
+
+      return crops.count > 0 ? true : false;
+    } catch (error) {
+      throw new BadRequestException('Nie udało się usunąć upraw');
+    }
+  }
+
+  async findGrowingCrop(fieldId: string): Promise<CropDto> {
+    try {
+      const crop = await this.prisma.crop.findFirst({
+        where: { isGrowing: true, fieldId },
+        include: { field: false },
+      });
+      const cropDto: CropDto = plainToInstance(CropDto, crop, {
+        excludeExtraneousValues: true,
+      });
+      return cropDto;
+    } catch (error) {
+      throw new InternalServerErrorException('Bład serwera');
+    }
+  }
+
+  async getAllByFieldId(fieldId: string): Promise<CropDto[]> {
+    try {
+      const crops = await this.prisma.crop.findMany({
+        where: { fieldId },
+        include: { field: false },
+      });
+      const cropDto: CropDto[] = plainToInstance(CropDto, crops, {
+        excludeExtraneousValues: true,
+      });
+      return cropDto;
+    } catch (error) {
+      throw new InternalServerErrorException('Bład serwera');
+    }
+  }
 }
