@@ -60,7 +60,7 @@ const MaszynyAddPage = () => {
 
   return (
     <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
-      <h2 className="text-xl font-bold mb-4">Dodanie nowego zwierzęcia</h2>
+      <h2 className="text-xl font-bold mb-4">Dodanie nowej maszyny</h2>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <FormField
