@@ -92,7 +92,7 @@ const page = () => {
   return (
     <div className="bg-white rounded-lg shadow p-6 ">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-semibold mb-6">Lista zwierząt</h2>
+        <h2 className="text-2xl font-semibold mb-6">Lista maszyn</h2>
         <button
           onClick={() => nav("/dashboard/maszyny/add")}
           className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-md cursor-pointer flex items-center gap-2"

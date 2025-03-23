@@ -11,6 +11,7 @@ import UprawyPages from "./pages/DashboardPages/UprawyPages";
 import PolaPages from "./pages/DashboardPages/PolaPages";
 import MaszynyPages from "./pages/DashboardPages/MaszynyPages";
 import ZwierzetaPages from "./pages/DashboardPages/ZwierzetaPages";
+import MagazynPage from "./pages/DashboardPages/MagazynPages";
 import Login from "./pages/Login/Login";
 import ProtectionRoute from "./components/ProtectionRoute";
 import RegisterPage from "./pages/Register/RegisterPage";
@@ -50,7 +51,7 @@ function App() {
             <Route path=":itemId" element={<MaszynyDetailPage />} />
             <Route path=":itemId/edit" element={<MaszynyEditPage />} />
           </Route>
-          <Route path="/dashboard/magazyny" element={<MaszynyPages />} />
+          <Route path="/dashboard/magazyny" element={<MagazynPage />} />
           <Route path="/dashboard/zwierzeta">
             <Route index element={<ZwierzetaPages />} />
             <Route path=":itemId" element={<ZwierzetaDetailPage />} />
