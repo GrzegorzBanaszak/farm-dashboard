@@ -81,6 +81,33 @@ Po stronie klienta:
 - Dodanie zadań do wykonania
 - Obsługa wielu użytkowników i uprawnień
 
+## Uruchomienie projektu
+
+Należy mieć zainstalowane Node.js i npm.
+https://nodejs.org/en
+
+1. Sklonuj repozytorium
+
+```
+  git clone https://github.com/GrzegorzBanaszak/farm-dashboard.git
+```
+
+2. Zainstaluj zależności
+
+Dla client należy uruchomić `npm install` w katalogu `client`.
+np. D:\farm-dashboard\client>
+
+Dla servera należy uruchomić `npm install` w katalogu `server`.
+np. D:\farm-dashboard\server>
+
+W folderze `server` pliku `.env` należy wprowadzić dane do bazy danych.
+
+Dodatkowo dla servera należy wygenerować clienta prisma. ` npx prisma generate`
+
+3. Komendy do uruchomienia
+   Uruchom serwer: `npm run start:dev`
+   Uruchom klient: `npm run dev`
+
 ## Stan Projektu
 
 #### Client
