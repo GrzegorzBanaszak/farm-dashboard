@@ -41,7 +41,29 @@ const initialState: MaszynyState = {
 const maszynySlice = createSlice({
   name: "maszyny",
   initialState,
-  reducers: {},
+  reducers: {
+    clearMaszynyAddState: state => {
+      state.maszynaCreateState = {
+        loading: LoadingState.IDLE,
+        error: false,
+        messages: [],
+      };
+    },
+    clearMaszynyEditState: state => {
+      state.maszynaUpdateState = {
+        loading: LoadingState.IDLE,
+        error: false,
+        messages: [],
+      };
+    },
+    clearMaszynyRemoveState: state => {
+      state.maszynaRemoveState = {
+        loading: LoadingState.IDLE,
+        error: false,
+        messages: [],
+      };
+    },
+  },
   extraReducers: (builder: ActionReducerMapBuilder<MaszynyState>) => {
     //Pobieranie wszystkich maszyn
     builder
@@ -131,5 +153,9 @@ const maszynySlice = createSlice({
   },
 });
 
-export const {} = maszynySlice.actions;
+export const {
+  clearMaszynyAddState,
+  clearMaszynyEditState,
+  clearMaszynyRemoveState,
+} = maszynySlice.actions;
 export default maszynySlice.reducer;
