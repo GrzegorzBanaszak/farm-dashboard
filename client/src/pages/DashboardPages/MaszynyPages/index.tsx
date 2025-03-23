@@ -5,6 +5,7 @@ import ItemRow from "@/components/ItemRow";
 import ItemsListHeader from "@/components/ItemsListHeader";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import Pagination from "@/components/Pagination";
+import { clearMaszynyRemoveState } from "@/features/maszyny/maszynySlice";
 import { maszynyThunk } from "@/features/maszyny/maszynyThunk";
 import MaszynySchema from "@/features/maszyny/types/MaszynySchema";
 import LoadingState from "@/types/LoadingState";
@@ -56,8 +57,8 @@ const page = () => {
 
   const afterDelete = () => {
     setItemToDelete(null);
-    // dispatch(resetRemoveZwierzetaState());
-    // dispatch(zwierzetaThunk.getAll());
+    dispatch(clearMaszynyRemoveState());
+    dispatch(maszynyThunk.getAll());
   };
 
   const handleDelete = (id: string) => {
@@ -70,7 +71,17 @@ const page = () => {
 
   useEffect(() => {
     if (maszyny.state.loading === LoadingState.SUCCEEDED) {
-      setItems(Object.values(maszyny.data));
+      const newItems = Object.values(maszyny.data);
+      setItems(newItems);
+
+      // Sprawdź, czy obecna strona powinna zostać zmieniona
+      const newTotalPages = Math.ceil(newItems.length / itemsPerPage);
+
+      // Jeśli obecna strona jest większa niż nowa całkowita liczba stron
+      // i jest większa niż 1, przenieś do poprzedniej strony
+      if (currentPage > newTotalPages && currentPage > 1) {
+        setCurrentPage(Math.max(1, newTotalPages));
+      }
     }
   }, [maszyny.state.loading]);
 
