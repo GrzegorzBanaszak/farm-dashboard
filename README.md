@@ -102,7 +102,7 @@ np. D:\farm-dashboard\server>
 
 W folderze `server` pliku `.env` należy wprowadzić dane do bazy danych.
 
-Dodatkowo dla servera należy wygenerować clienta prisma. ` npx prisma generate`
+Dodatkowo dla servera należy wygenerować servera należy zainstalować prisma client ` npx prisma generate`
 
 3. Komendy do uruchomienia
    Uruchom serwer: `npm run start:dev`
