@@ -9,8 +9,9 @@ import { ZwierzetaHealthStatus } from "@/features/zwierzeta/types/ZwierzetaHealt
 import { ZwierzetaSpices } from "@/features/zwierzeta/types/ZwierzetaSpices";
 import { resetAddZwierzetaState } from "@/features/zwierzeta/zwierzetaSlice";
 import { zwierzetaThunk } from "@/features/zwierzeta/zwierzetaThunk";
+import useFormChangeHandler from "@/hooks/useFormChangeHandler";
 import LoadingState from "@/types/LoadingState";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const ZwierzetaAddPage = () => {
@@ -25,20 +26,8 @@ const ZwierzetaAddPage = () => {
     birthDate: null,
   });
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setItem((prev) => ({
-      ...prev,
-      [name]: name === "size" ? Number(value) : value,
-    }));
-  };
-
-  const handleEnumSelectChange = (fieldName: any, value: any) => {
-    setItem((prevData) => ({
-      ...prevData,
-      [fieldName]: value,
-    }));
-  };
+  const { handleChange, handleEnumSelectChange } =
+    useFormChangeHandler<AddZwierzetaSchema>(setItem);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

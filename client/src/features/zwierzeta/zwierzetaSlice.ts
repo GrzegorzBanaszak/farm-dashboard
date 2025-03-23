@@ -54,6 +54,20 @@ const zwierzetaSlice = createSlice({
         messages: [],
       };
     },
+    resetUpdateZwierzetaState: (state) => {
+      state.zwierzetaUpdateState = {
+        loading: LoadingState.IDLE,
+        error: false,
+        messages: [],
+      };
+    },
+    resetRemoveZwierzetaState: (state) => {
+      state.zwierzetaRemoveState = {
+        loading: LoadingState.IDLE,
+        error: false,
+        messages: [],
+      };
+    },
   },
   extraReducers: (builder: ActionReducerMapBuilder<ZwierzetaState>) => {
     //Pobieranie wszystkich zwierzat
@@ -153,5 +167,9 @@ const zwierzetaSlice = createSlice({
   },
 });
 
-export const { resetAddZwierzetaState } = zwierzetaSlice.actions;
+export const {
+  resetAddZwierzetaState,
+  resetUpdateZwierzetaState,
+  resetRemoveZwierzetaState,
+} = zwierzetaSlice.actions;
 export default zwierzetaSlice.reducer;

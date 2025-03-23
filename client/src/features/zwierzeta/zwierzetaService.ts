@@ -27,6 +27,7 @@ const update = async (
   id: string,
   data: UpdateZwierzetaSchema
 ): Promise<ZwierzetaSchema> => {
+  data.birthDate = new Date(data.birthDate).toISOString();
   const res = await axios.put(`${ZWIERZETA_URL}/${id}`, data);
   return res.data;
 };
