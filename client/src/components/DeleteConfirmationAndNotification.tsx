@@ -1,6 +1,7 @@
 import { FC, useEffect } from "react";
 import DeleteNotification from "./DeleteNotification";
 import LoadingState from "@/types/LoadingState";
+import useConvert from "@/hooks/useConvert";
 
 interface DeleteConfirmationAndNotificationProps {
   item: any;
@@ -15,6 +16,7 @@ const DeleteConfirmationAndNotification: FC<
 > = ({ item, onBack, onDelete, loadingState, afterDelete }) => {
   const { id, ...rest } = item;
 
+  const { ifIsoDate } = useConvert();
   useEffect(() => {
     if (loadingState === LoadingState.SUCCEEDED) {
       setTimeout(() => {
@@ -44,7 +46,7 @@ const DeleteConfirmationAndNotification: FC<
               {item &&
                 Object.values(rest).map((value: any, index: number) => (
                   <p key={index} className="text-gray-700 text-center">
-                    <span className="font-medium">{value}</span>
+                    <span className="font-medium">{ifIsoDate(value)}</span>
                   </p>
                 ))}
             </div>

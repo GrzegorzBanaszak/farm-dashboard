@@ -1,10 +1,12 @@
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
+import DeleteConfirmationAndNotification from "@/components/DeleteConfirmationAndNotification";
 import ItemCard from "@/components/ItemCard";
 import ItemRow from "@/components/ItemRow";
 import ItemsListHeader from "@/components/ItemsListHeader";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import Pagination from "@/components/Pagination";
 import ZwierzetaSchema from "@/features/zwierzeta/types/ZwierzetaSchema";
+import { resetRemoveZwierzetaState } from "@/features/zwierzeta/zwierzetaSlice";
 import { zwierzetaThunk } from "@/features/zwierzeta/zwierzetaThunk";
 import LoadingState from "@/types/LoadingState";
 import { CirclePlus } from "lucide-react";
@@ -14,7 +16,9 @@ import { useNavigate } from "react-router-dom";
 const page = () => {
   const dispatch = useAppDispatch();
   const nav = useNavigate();
-  const { zwierzeta } = useAppSelector((state) => state.zwierzeta);
+  const { zwierzeta, zwierzetaRemoveState } = useAppSelector(
+    (state) => state.zwierzeta
+  );
   const [items, setItems] = useState<ZwierzetaSchema[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
@@ -48,19 +52,19 @@ const page = () => {
     }
   };
 
-  // const closeDeleteConfirmation = () => {
-  //   setItemToDelete(null);
-  // };
+  const closeDeleteConfirmation = () => {
+    setItemToDelete(null);
+  };
 
-  // const afterDelete = () => {
-  //   setItemToDelete(null);
-  //   dispatch(clearPoleDeleteState());
-  //   dispatch(polaThunk.getAll());
-  // };
+  const afterDelete = () => {
+    setItemToDelete(null);
+    dispatch(resetRemoveZwierzetaState());
+    dispatch(zwierzetaThunk.getAll());
+  };
 
-  // const handleDelete = (id: string) => {
-  //   dispatch(polaThunk.remove(id));
-  // };
+  const handleDelete = (id: string) => {
+    dispatch(zwierzetaThunk.remove(id));
+  };
 
   useEffect(() => {
     dispatch(zwierzetaThunk.getAll());
@@ -140,15 +144,15 @@ const page = () => {
         />
       )}
 
-      {/* {itemToDelete && (
+      {itemToDelete && (
         <DeleteConfirmationAndNotification
           item={itemToDelete}
           onBack={closeDeleteConfirmation}
           onDelete={handleDelete}
           afterDelete={afterDelete}
-          loadingState={poleRemoveState.loading}
+          loadingState={zwierzetaRemoveState.loading}
         />
-      )} */}
+      )}
     </div>
   );
 };

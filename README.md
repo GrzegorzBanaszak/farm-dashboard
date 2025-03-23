@@ -86,38 +86,43 @@ Po stronie klienta:
 #### Client
 
 - [ ] Strona główna
-  - [ ] Strona otwarcia
+  - [x] Strona otwarcia
   - [ ] O Nas
   - [ ] Funkcje
   - [ ] Cennik
   - [ ] Kontakt
-- [ ] Logowanie
-- [ ] Rejestracja
+- [x] Logowanie
+- [x] Rejestracja
 - [ ] Dashboard
   - [ ] Strona głowna statystyki
-  - [ ] Pola
+  - [x] Pola
     - [x] Reducer i akcje
-    - [ ] Wyswietlanie listy pol
-    - [ ] Widok szczegolowy pola
-    - [ ] Dodanie nowego pola
-    - [ ] Edycja pola
+    - [x] Wyswietlanie listy pol
+    - [x] Widok szczegolowy pola
+    - [x] Dodanie nowego pola
+    - [x] Edycja pola
+    - [x] Usuwanie pola
   - [ ] Uprawy
     - [x] Reducer i akcje
     - [ ] Wyswietlanie listy upraw
     - [ ] Widok szczegolowy uprawy
     - [ ] Dodanie nowej uprawy
     - [ ] Edycja uprawy
+    - [ ] Usunięcie uprawy
   - [ ] Maszyny
     - [x] Reducer i akcje
     - [ ] Wyswietlanie listy maszyn
     - [ ] Widok szczegolowy maszyny
     - [ ] Dodanie nowej maszyny
-  - [ ] Zwierzeta
-    - [ ] Reducer i akcje
-    - [ ] Wyswietlanie listy zwierzat
-    - [ ] Widok szczegolowy zwierzeta
-    - [ ] Dodanie nowego zwierzeta
-    - [ ] Edycja zwierzeta
+    - [ ] Edycja maszyny
+    - [ ] Usunięcie maszyny
+  - [x] Zwierzeta
+    - [x] Reducer i akcje
+    - [x] Wyswietlanie listy zwierzat
+    - [x] Widok szczegolowy zwierzeta
+    - [x] Dodanie nowego zwierzeta
+    - [x] Edycja zwierzeta
+    - [x] Usuwanie zwierzeta
   - [ ] Magazyny
     - [ ] Reducer i akcje
     - [ ] Wyswietlanie listy magazynow
