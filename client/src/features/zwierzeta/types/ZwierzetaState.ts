@@ -1,4 +1,5 @@
 import RequestState from "../../../types/RequestState";
+import ZwierzetaDetailSchema from "./ZwierzetaDetailSchema";
 import ZwierzetaSchema from "./ZwierzetaSchema";
 
 export default interface ZwierzetaState {
@@ -7,7 +8,7 @@ export default interface ZwierzetaState {
     state: RequestState;
   };
   zwierzetaDetails: {
-    data: ZwierzetaSchema;
+    data: ZwierzetaDetailSchema;
     state: RequestState;
   };
   zwierzetaCreateState: RequestState;

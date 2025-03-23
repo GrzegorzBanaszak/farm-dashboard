@@ -15,11 +15,21 @@ const ItemRow: FC<IItemRowProps> = ({
   onViewDetails,
 }) => {
   const { id, ...rest } = item;
+
+  const dispalyValue = (value: any) => {
+    const isoDateRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/;
+
+    if (isoDateRegex.test(value)) {
+      return new Date(value).toLocaleDateString("pl-PL");
+    }
+
+    return value;
+  };
   return (
     <tr className="border-b border-b-gray-200 hover:bg-gray-50">
       {Object.values(rest).map((item: any, index) => (
         <td key={index} className="py-3 px-4">
-          {item}
+          {dispalyValue(item)}
         </td>
       ))}
 

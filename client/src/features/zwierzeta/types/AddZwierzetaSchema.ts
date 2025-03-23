@@ -4,7 +4,7 @@ import { ZwierzetaSpices } from "./ZwierzetaSpices";
 export default interface AddZwierzetaSchema {
   name: string;
   specie: ZwierzetaSpices;
-  birthDate?: Date | string;
-  health?: ZwierzetaHealthStatus;
+  birthDate: string | null;
+  health: ZwierzetaHealthStatus | null;
   number: number;
 }

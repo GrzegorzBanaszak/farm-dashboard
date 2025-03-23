@@ -18,6 +18,7 @@ const getOne = async (id: string): Promise<ZwierzetaSchema> => {
 };
 
 const create = async (data: AddZwierzetaSchema): Promise<ZwierzetaSchema> => {
+  if (data.birthDate) data.birthDate = new Date(data.birthDate).toISOString();
   const res = await axios.post(ZWIERZETA_URL, data);
   return res.data;
 };
