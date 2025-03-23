@@ -4,6 +4,7 @@ import MaszynySchema from "./types/MaszynySchema";
 import AddMaszynySchema from "./types/AddMaszynySchema";
 import UpdateMaszynySchema from "./types/UpdateMaszynySchema";
 import { MachineCondition } from "./types/MachineCondition";
+import MaszynyDetailSchema from "./types/MaszynyDetailSchema";
 
 const MASZYNY_URL = `${constants.API_URL}/machine`;
 
@@ -12,7 +13,7 @@ const getAll = async (): Promise<MaszynySchema[]> => {
   return res.data;
 };
 
-const getOne = async (id: string): Promise<MaszynySchema> => {
+const getOne = async (id: string): Promise<MaszynyDetailSchema> => {
   const res = await axios.get(`${MASZYNY_URL}/${id}`);
   return res.data;
 };

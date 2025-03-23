@@ -1,8 +1,9 @@
 import { MachineCondition } from "./MachineCondition";
 
-export default interface UpdateMaszynySchema {
+export default interface MaszynyDetailSchema {
+  id: string;
   name: string;
   type: string;
-  purchaseDate: string;
+  purchaseDate: Date | string;
   condition: MachineCondition;
 }
