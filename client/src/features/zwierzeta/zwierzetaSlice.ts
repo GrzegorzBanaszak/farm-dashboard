@@ -46,7 +46,29 @@ const initialState: ZwierzetaState = {
 const zwierzetaSlice = createSlice({
   name: "zwierzeta",
   initialState,
-  reducers: {},
+  reducers: {
+    resetAddZwierzetaState: (state) => {
+      state.zwierzetaCreateState = {
+        loading: LoadingState.IDLE,
+        error: false,
+        messages: [],
+      };
+    },
+    resetUpdateZwierzetaState: (state) => {
+      state.zwierzetaUpdateState = {
+        loading: LoadingState.IDLE,
+        error: false,
+        messages: [],
+      };
+    },
+    resetRemoveZwierzetaState: (state) => {
+      state.zwierzetaRemoveState = {
+        loading: LoadingState.IDLE,
+        error: false,
+        messages: [],
+      };
+    },
+  },
   extraReducers: (builder: ActionReducerMapBuilder<ZwierzetaState>) => {
     //Pobieranie wszystkich zwierzat
     builder
@@ -92,8 +114,7 @@ const zwierzetaSlice = createSlice({
       .addCase(zwierzetaThunk.create.pending, (state, _) => {
         state.zwierzetaCreateState.loading = LoadingState.PENDING;
       })
-      .addCase(zwierzetaThunk.create.fulfilled, (state, action) => {
-        state.zwierzeta.data[action.payload.id] = action.payload;
+      .addCase(zwierzetaThunk.create.fulfilled, (state, _) => {
         state.zwierzetaCreateState.loading = LoadingState.SUCCEEDED;
         state.zwierzetaCreateState.messages = [];
       })
@@ -107,8 +128,7 @@ const zwierzetaSlice = createSlice({
       .addCase(zwierzetaThunk.update.pending, (state, _) => {
         state.zwierzetaUpdateState.loading = LoadingState.PENDING;
       })
-      .addCase(zwierzetaThunk.update.fulfilled, (state, action) => {
-        state.zwierzeta.data[action.payload.id] = action.payload;
+      .addCase(zwierzetaThunk.update.fulfilled, (state, _) => {
         state.zwierzetaUpdateState.loading = LoadingState.SUCCEEDED;
         state.zwierzetaUpdateState.messages = [];
       })
@@ -122,8 +142,7 @@ const zwierzetaSlice = createSlice({
       .addCase(zwierzetaThunk.remove.pending, (state, _) => {
         state.zwierzetaRemoveState.loading = LoadingState.PENDING;
       })
-      .addCase(zwierzetaThunk.remove.fulfilled, (state, action) => {
-        delete state.zwierzeta.data[action.payload.id];
+      .addCase(zwierzetaThunk.remove.fulfilled, (state, _) => {
         state.zwierzetaRemoveState.loading = LoadingState.SUCCEEDED;
         state.zwierzetaRemoveState.messages = [];
       })
@@ -137,8 +156,7 @@ const zwierzetaSlice = createSlice({
       .addCase(zwierzetaThunk.updateHealth.pending, (state, _) => {
         state.zwierzetaHealthUpdateState.loading = LoadingState.PENDING;
       })
-      .addCase(zwierzetaThunk.updateHealth.fulfilled, (state, action) => {
-        state.zwierzeta.data[action.payload.id] = action.payload;
+      .addCase(zwierzetaThunk.updateHealth.fulfilled, (state, _) => {
         state.zwierzetaHealthUpdateState.loading = LoadingState.SUCCEEDED;
         state.zwierzetaHealthUpdateState.messages = [];
       })
@@ -149,5 +167,9 @@ const zwierzetaSlice = createSlice({
   },
 });
 
-export const {} = zwierzetaSlice.actions;
+export const {
+  resetAddZwierzetaState,
+  resetUpdateZwierzetaState,
+  resetRemoveZwierzetaState,
+} = zwierzetaSlice.actions;
 export default zwierzetaSlice.reducer;
