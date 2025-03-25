@@ -9,7 +9,7 @@ const ItemsListHeader: FC<ItemsListHeaderProps> = ({ items }) => {
     <thead>
       <tr className="bg-gray-100">
         {items.map((item, index) => (
-          <th key={index} className="py-3 px-4 text-left">
+          <th key={index} className="py-3 px-4 text-center">
             {item}
           </th>
         ))}

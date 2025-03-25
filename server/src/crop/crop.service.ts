@@ -14,10 +14,10 @@ import { UpdateCropDto } from './dto/update-crop.dto';
 export class CropService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async getAll(): Promise<CropDto[]> {
+  async getAll(withFields = false): Promise<CropDto[]> {
     const crops = await this.prisma.crop.findMany({
       include: {
-        field: true,
+        field: withFields,
       },
     });
 

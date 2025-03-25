@@ -3,4 +3,5 @@ export default interface PolaSchema {
   name: string;
   size: number;
   location: string;
+  isGrowing: boolean;
 }

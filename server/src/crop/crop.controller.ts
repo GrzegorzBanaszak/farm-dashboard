@@ -1,11 +1,15 @@
 import {
   Body,
   Controller,
+  DefaultValuePipe,
   Delete,
   Get,
   Param,
+  ParseBoolPipe,
   Post,
   Put,
+  Query,
+  UseGuards,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -16,12 +20,16 @@ import {
   ApiCreatedResponse,
   ApiOkResponse,
   ApiNotFoundResponse,
+  ApiQuery,
 } from '@nestjs/swagger';
 import { CropService } from './crop.service';
 import { CreateCropDto } from './dto/create-crop.dto';
 import { UpdateCropDto } from './dto/update-crop.dto';
 import { CropDto } from './dto/crop.dto';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { IsBoolean } from 'class-validator';
 
+@UseGuards(JwtAuthGuard)
 @ApiTags('Zbiory')
 @Controller('crop')
 export class CropController {
@@ -33,8 +41,17 @@ export class CropController {
     description: 'Lista wszystkich zbiorów została pomyślnie zwrócona',
     type: [CropDto],
   })
-  async getAll(): Promise<CropDto[]> {
-    return await this.cropService.getAll();
+  @ApiQuery({
+    name: 'withFields',
+    description: 'Czy pobiera pola',
+    type: 'boolean',
+    required: false,
+  })
+  async getAll(
+    @Query('withFields', new DefaultValuePipe(false), ParseBoolPipe)
+    withFields: boolean,
+  ): Promise<CropDto[]> {
+    return await this.cropService.getAll(withFields);
   }
 
   @Get(':id')
