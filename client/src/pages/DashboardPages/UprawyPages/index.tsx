@@ -16,7 +16,7 @@ const page = () => {
   const { uprawy, uprawyRemoveState } = useAppSelector(state => state.uprawy);
   const [items, setItems] = useState<UprawySchema[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(5);
+  const [itemsPerPage] = useState(10);
   const [itemToDelete, setItemToDelete] = useState<UprawySchema | null>(null);
 
   const nav = useNavigate();

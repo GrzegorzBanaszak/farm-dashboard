@@ -29,7 +29,29 @@ const initialState: UprawyState = {
 const uprawySlice = createSlice({
   name: "uprawy",
   initialState,
-  reducers: {},
+  reducers: {
+    clearUprawyAddState: state => {
+      state.uprawyCreateState = {
+        loading: LoadingState.IDLE,
+        error: false,
+        messages: [],
+      };
+    },
+    clearUprawyEditState: state => {
+      state.uprawyUpdateState = {
+        loading: LoadingState.IDLE,
+        error: false,
+        messages: [],
+      };
+    },
+    clearUprawyRemoveState: state => {
+      state.uprawyRemoveState = {
+        loading: LoadingState.IDLE,
+        error: false,
+        messages: [],
+      };
+    },
+  },
   extraReducers: (builder: ActionReducerMapBuilder<UprawyState>) => {
     //Pobieranie wszystkich upraw
     builder
@@ -117,5 +139,9 @@ const uprawySlice = createSlice({
   },
 });
 
-export const {} = uprawySlice.actions;
+export const {
+  clearUprawyAddState,
+  clearUprawyEditState,
+  clearUprawyRemoveState,
+} = uprawySlice.actions;
 export default uprawySlice.reducer;

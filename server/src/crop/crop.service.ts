@@ -53,7 +53,10 @@ export class CropService {
       if (!field) throw new NotFoundException('Nie znaleziono pola');
 
       const crop = await this.prisma.crop.create({
-        data,
+        data: {
+          ...data,
+          isGrowing: data.harvestedAt ? false : true,
+        },
         include: { field: true },
       });
 
@@ -70,7 +73,10 @@ export class CropService {
     try {
       const crop = await this.prisma.crop.update({
         where: { id },
-        data,
+        data: {
+          ...data,
+          isGrowing: data.harvestedAt ? false : true,
+        },
         include: { field: true },
       });
       const cropDto: CropDto = plainToInstance(CropDto, crop, {

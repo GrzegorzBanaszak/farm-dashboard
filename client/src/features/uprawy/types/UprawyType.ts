@@ -1,12 +1,12 @@
 export enum UprawyType {
   PSZENICA = "PSZENICA",
   ZIEMNIAK = "ZIEMNIAK",
-  JECZMIEN = "JĘCZMIEŃ",
+  JECZMIEN = "JECZMIEN",
   KUKURYDZA = "KUKURYDZA",
-  RYZ = "RYŻ",
+  RYZ = "RYZ",
   SOJA = "SOJA",
   OWIES = "OWIES",
-  ZYTNO = "ŻYTO",
+  ZYTNO = "ZYTNO",
   PROSO = "PROSO",
   BURAK = "BURAK",
 }

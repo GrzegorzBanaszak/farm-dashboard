@@ -2,8 +2,8 @@ import { UprawyType } from "./UprawyType";
 
 export default interface AddUprawySchema {
   type: UprawyType;
-  plantedAt: Date | string;
-  harvestedAt?: Date | string;
-  yield?: number;
+  plantedAt: string;
+  harvestedAt: string | null;
+  yield: number | null;
   fieldId: string;
 }
