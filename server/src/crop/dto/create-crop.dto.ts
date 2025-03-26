@@ -9,6 +9,7 @@ import {
   IsString,
   Validate,
 } from 'class-validator';
+import { IsValidObjectId } from 'src/common/decorators/is-valid-object-id.decorator';
 import { IsHarvestDateAfterPlantDate } from 'src/common/validators/is-harvest-date-after-plant-date.validator';
 
 export class CreateCropDto {
@@ -50,5 +51,6 @@ export class CreateCropDto {
   })
   @IsString()
   @IsNotEmpty()
+  @IsValidObjectId()
   fieldId: string;
 }

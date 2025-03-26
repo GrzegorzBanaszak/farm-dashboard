@@ -52,10 +52,24 @@ export class CropService {
 
       if (!field) throw new NotFoundException('Nie znaleziono pola');
 
+      const isGrowing = data.harvestedAt ? true : false;
+
+      console.log(isGrowing);
+
+      if (isGrowing) {
+        const crops = await this.prisma.crop.findMany({
+          where: { fieldId: data.fieldId, isGrowing: true },
+        });
+
+        if (crops.length > 0) {
+          throw new NotFoundException('Pole jest juz zajęte');
+        }
+      }
+
       const crop = await this.prisma.crop.create({
         data: {
           ...data,
-          isGrowing: data.harvestedAt ? false : true,
+          isGrowing,
         },
         include: { field: true },
       });
@@ -65,7 +79,8 @@ export class CropService {
       });
       return cropDto;
     } catch (error) {
-      throw new BadRequestException('Nie wszystkie dane sa poprawne');
+      console.log(error);
+      throw new BadRequestException(error.message);
     }
   }
 
