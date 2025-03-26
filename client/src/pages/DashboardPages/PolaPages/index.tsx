@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 
 const ItemsList = () => {
   const dispatch = useAppDispatch();
-  const { pola, poleRemoveState } = useAppSelector((state) => state.pola);
+  const { pola, poleRemoveState } = useAppSelector(state => state.pola);
   const [items, setItems] = useState<PolaSchema[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
@@ -29,9 +29,20 @@ const ItemsList = () => {
 
   useEffect(() => {
     if (pola.state.loading === LoadingState.SUCCEEDED) {
-      setItems(Object.values(pola.data));
+      const newItems = Object.values(pola.data);
+      setItems(newItems);
+
+      // Sprawdź, czy obecna strona powinna zostać zmieniona
+      const newTotalPages = Math.ceil(newItems.length / itemsPerPage);
+
+      // Jeśli obecna strona jest większa niż nowa całkowita liczba stron
+      // i jest większa niż 1, przenieś do poprzedniej strony
+      if (currentPage > newTotalPages && currentPage > 1) {
+        setCurrentPage(Math.max(1, newTotalPages));
+      }
     }
   }, [pola.state.loading]);
+
   // Funkcje obsługujące akcje
   const handleViewDetails = (item: any) => {
     nav(`/dashboard/pola/${item.id}`);
@@ -42,7 +53,7 @@ const ItemsList = () => {
   };
 
   const displayDeleteConfirmation = (id: string) => {
-    const item = items.find((item) => item.id === id);
+    const item = items.find(item => item.id === id);
     if (item) {
       setItemToDelete(item);
     }
@@ -88,7 +99,7 @@ const ItemsList = () => {
       </div>
       <div className="block sm:hidden">
         {currentItems &&
-          currentItems.map((item) => (
+          currentItems.map(item => (
             <ItemCard
               key={item.id}
               item={item}

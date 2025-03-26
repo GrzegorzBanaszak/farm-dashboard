@@ -17,7 +17,7 @@ const page = () => {
   const dispatch = useAppDispatch();
   const nav = useNavigate();
   const { zwierzeta, zwierzetaRemoveState } = useAppSelector(
-    (state) => state.zwierzeta
+    state => state.zwierzeta
   );
   const [items, setItems] = useState<ZwierzetaSchema[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -46,7 +46,7 @@ const page = () => {
   };
 
   const displayDeleteConfirmation = (id: string) => {
-    const item = items.find((item) => item.id === id);
+    const item = items.find(item => item.id === id);
     if (item) {
       setItemToDelete(item);
     }
@@ -72,7 +72,17 @@ const page = () => {
 
   useEffect(() => {
     if (zwierzeta.state.loading === LoadingState.SUCCEEDED) {
-      setItems(Object.values(zwierzeta.data));
+      const newItems = Object.values(zwierzeta.data);
+      setItems(newItems);
+
+      // Sprawdź, czy obecna strona powinna zostać zmieniona
+      const newTotalPages = Math.ceil(newItems.length / itemsPerPage);
+
+      // Jeśli obecna strona jest większa niż nowa całkowita liczba stron
+      // i jest większa niż 1, przenieś do poprzedniej strony
+      if (currentPage > newTotalPages && currentPage > 1) {
+        setCurrentPage(Math.max(1, newTotalPages));
+      }
     }
   }, [zwierzeta.state.loading]);
 
@@ -93,7 +103,7 @@ const page = () => {
       </div>
       <div className="block sm:hidden">
         {currentItems &&
-          currentItems.map((item) => (
+          currentItems.map(item => (
             <ItemCard
               key={item.id}
               item={item}

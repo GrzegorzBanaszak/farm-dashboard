@@ -11,8 +11,8 @@ import UprawyPages from "./pages/DashboardPages/UprawyPages";
 import PolaPages from "./pages/DashboardPages/PolaPages";
 import MaszynyPages from "./pages/DashboardPages/MaszynyPages";
 import ZwierzetaPages from "./pages/DashboardPages/ZwierzetaPages";
+import MagazynPage from "./pages/DashboardPages/MagazynPages";
 import Login from "./pages/Login/Login";
-
 import ProtectionRoute from "./components/ProtectionRoute";
 import RegisterPage from "./pages/Register/RegisterPage";
 import PolaDetailPage from "./pages/DashboardPages/PolaPages/PolaDetailPage";
@@ -21,6 +21,9 @@ import PoleAddPage from "./pages/DashboardPages/PolaPages/PoleAddPage";
 import ZwierzetaDetailPage from "./pages/DashboardPages/ZwierzetaPages/ZwierzetaDetailPage";
 import ZwierzetaAddPage from "./pages/DashboardPages/ZwierzetaPages/ZwierzetaAddPage";
 import ZwierzetaEditPage from "./pages/DashboardPages/ZwierzetaPages/ZwierzetaEditPage";
+import MaszynyAddPage from "./pages/DashboardPages/MaszynyPages/MaszynyAddPage";
+import MaszynyEditPage from "./pages/DashboardPages/MaszynyPages/MaszynyEditPage";
+import MaszynyDetailPage from "./pages/DashboardPages/MaszynyPages/MaszynyDetailPage";
 
 function App() {
   return (
@@ -42,9 +45,13 @@ function App() {
             <Route path=":itemId" element={<PolaDetailPage />} />
             <Route path=":itemId/edit" element={<PoleEditPage />} />
           </Route>
-
-          <Route path="/dashboard/maszyny" element={<MaszynyPages />} />
-          <Route path="/dashboard/magazyny" element={<MaszynyPages />} />
+          <Route path="/dashboard/maszyny">
+            <Route index element={<MaszynyPages />} />
+            <Route path="add" element={<MaszynyAddPage />} />
+            <Route path=":itemId" element={<MaszynyDetailPage />} />
+            <Route path=":itemId/edit" element={<MaszynyEditPage />} />
+          </Route>
+          <Route path="/dashboard/magazyny" element={<MagazynPage />} />
           <Route path="/dashboard/zwierzeta">
             <Route index element={<ZwierzetaPages />} />
             <Route path=":itemId" element={<ZwierzetaDetailPage />} />

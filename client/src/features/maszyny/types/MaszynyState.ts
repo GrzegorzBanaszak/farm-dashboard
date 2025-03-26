@@ -1,4 +1,5 @@
 import RequestState from "../../../types/RequestState";
+import MaszynyDetailSchema from "./MaszynyDetailSchema";
 import MaszynySchema from "./MaszynySchema";
 
 export default interface MaszynyState {
@@ -7,7 +8,7 @@ export default interface MaszynyState {
     state: RequestState;
   };
   maszynaDetails: {
-    data: MaszynySchema;
+    data: MaszynyDetailSchema;
     state: RequestState;
   };
   maszynaCreateState: RequestState;
