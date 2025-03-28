@@ -2,7 +2,7 @@ import { ActionReducerMapBuilder, createSlice } from "@reduxjs/toolkit";
 import PolaState from "./types/PolaState";
 import { polaThunk } from "./polaThunk";
 import mapToRecord from "../../utils/mapToRecord";
-import PolaSchema from "./types/PolaSchema";
+import PolaSchema from "./types/PolaSchema.1";
 import LoadingState from "../../types/LoadingState";
 
 const initialState: PolaState = {
@@ -30,21 +30,21 @@ const polaSlice = createSlice({
   name: "pola",
   initialState,
   reducers: {
-    clearPoleAddState: (state) => {
+    clearPoleAddState: state => {
       state.poleCreateState = {
         loading: LoadingState.IDLE,
         error: false,
         messages: [],
       };
     },
-    clearEditState: (state) => {
+    clearEditState: state => {
       state.poleUpdateState = {
         loading: LoadingState.IDLE,
         error: false,
         messages: [],
       };
     },
-    clearPoleDeleteState: (state) => {
+    clearPoleDeleteState: state => {
       state.poleRemoveState = {
         loading: LoadingState.IDLE,
         error: false,

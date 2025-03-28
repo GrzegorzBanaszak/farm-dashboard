@@ -23,12 +23,16 @@ const ItemRow: FC<IItemRowProps> = ({
       return new Date(value).toLocaleDateString("pl-PL");
     }
 
+    if (typeof value === "boolean") return value ? "Tak" : "Nie";
+
+    if (value === null) return "-";
+
     return value;
   };
   return (
     <tr className="border-b border-b-gray-200 hover:bg-gray-50">
       {Object.values(rest).map((item: any, index) => (
-        <td key={index} className="py-3 px-4">
+        <td key={index} className="py-3 px-4 text-center">
           {dispalyValue(item)}
         </td>
       ))}

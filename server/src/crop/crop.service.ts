@@ -14,10 +14,10 @@ import { UpdateCropDto } from './dto/update-crop.dto';
 export class CropService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async getAll(): Promise<CropDto[]> {
+  async getAll(withFields = false): Promise<CropDto[]> {
     const crops = await this.prisma.crop.findMany({
       include: {
-        field: true,
+        field: withFields,
       },
     });
 
@@ -52,8 +52,25 @@ export class CropService {
 
       if (!field) throw new NotFoundException('Nie znaleziono pola');
 
+      const isGrowing = data.harvestedAt ? true : false;
+
+      console.log(isGrowing);
+
+      if (isGrowing) {
+        const crops = await this.prisma.crop.findMany({
+          where: { fieldId: data.fieldId, isGrowing: true },
+        });
+
+        if (crops.length > 0) {
+          throw new NotFoundException('Pole jest juz zajęte');
+        }
+      }
+
       const crop = await this.prisma.crop.create({
-        data,
+        data: {
+          ...data,
+          isGrowing,
+        },
         include: { field: true },
       });
 
@@ -62,7 +79,8 @@ export class CropService {
       });
       return cropDto;
     } catch (error) {
-      throw new BadRequestException('Nie wszystkie dane sa poprawne');
+      console.log(error);
+      throw new BadRequestException(error.message);
     }
   }
 
@@ -70,7 +88,10 @@ export class CropService {
     try {
       const crop = await this.prisma.crop.update({
         where: { id },
-        data,
+        data: {
+          ...data,
+          isGrowing: data.harvestedAt ? false : true,
+        },
         include: { field: true },
       });
       const cropDto: CropDto = plainToInstance(CropDto, crop, {

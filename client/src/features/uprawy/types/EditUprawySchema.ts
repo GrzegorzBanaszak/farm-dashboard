@@ -1,6 +1,6 @@
 import { UprawyType } from "./UprawyType";
 
-export default interface UpdateUprawySchema {
+export default interface EditUprawySchema {
   type: UprawyType;
   plantedAt: string;
   harvestedAt: string | null;

@@ -7,7 +7,10 @@ import {
   IsNumber,
   IsOptional,
   IsString,
+  Validate,
 } from 'class-validator';
+import { IsValidObjectId } from 'src/common/decorators/is-valid-object-id.decorator';
+import { IsHarvestDateAfterPlantDate } from 'src/common/validators/is-harvest-date-after-plant-date.validator';
 
 export class CreateCropDto {
   @ApiProperty({
@@ -31,6 +34,7 @@ export class CreateCropDto {
   })
   @IsDate()
   @IsOptional()
+  @Validate(IsHarvestDateAfterPlantDate)
   @ApiPropertyOptional()
   harvestedAt?: Date;
 
@@ -47,5 +51,6 @@ export class CreateCropDto {
   })
   @IsString()
   @IsNotEmpty()
+  @IsValidObjectId()
   fieldId: string;
 }

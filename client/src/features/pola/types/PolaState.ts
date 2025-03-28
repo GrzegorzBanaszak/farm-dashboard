@@ -1,5 +1,5 @@
 import RequestState from "../../../types/RequestState";
-import PolaSchema from "./PolaSchema";
+import PolaSchema from "./PolaSchema.1";
 import PoleDetailSchema from "./PoleDetailSchema";
 
 export default interface PolaState {

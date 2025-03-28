@@ -25,6 +25,10 @@ const ItemCard: FC<IItemCardProps> = ({
       return new Date(value).toLocaleDateString("pl-PL");
     }
 
+    if (typeof value === "boolean") return value ? "Tak" : "Nie";
+
+    if (value === null) return "-";
+
     return value;
   };
   return (
@@ -60,7 +64,7 @@ const ItemCard: FC<IItemCardProps> = ({
       <div className="mt-2 grid grid-cols-2 gap-2 text-sm">
         {Object.values(rest).map((value: any, index) => (
           <div key={index}>
-            <span className="text-gray-500">{titles[index]}:</span>
+            <span className="text-gray-500 pr-2">{titles[index]}:</span>
             {dispalyValue(value)}
           </div>
         ))}
