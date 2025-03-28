@@ -61,7 +61,8 @@ const UprawaDetailPage = () => {
       {displayDeleteConfirmation && (
         <DeleteConfirmationAndNotification
           item={{
-            field: uprawyDetails.data.field,
+            type: uprawyDetails.data.type,
+            field: uprawyDetails.data.field.name,
             id: uprawyDetails.data.id,
             plantedAt: uprawyDetails.data.plantedAt,
             harvestedAt: uprawyDetails.data.harvestedAt,

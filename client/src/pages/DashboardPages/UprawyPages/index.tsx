@@ -10,7 +10,8 @@ import ItemRow from "@/components/ItemRow";
 import ItemsListHeader from "@/components/ItemsListHeader";
 import ItemCard from "@/components/ItemCard";
 import { CirclePlus } from "lucide-react";
-import ErrorBoundary from "@/components/ErrorBoundary";
+import DeleteConfirmationAndNotification from "@/components/DeleteConfirmationAndNotification";
+import { clearUprawyRemoveState } from "@/features/uprawy/uprawySlice";
 
 const page = () => {
   const dispatch = useAppDispatch();
@@ -60,6 +61,16 @@ const page = () => {
 
   const closeDeleteConfirmation = () => {
     setItemToDelete(null);
+  };
+
+  const afterDelete = () => {
+    setItemToDelete(null);
+    dispatch(clearUprawyRemoveState());
+    dispatch(uprawyThunk.getAll());
+  };
+
+  const handleDelete = (id: string) => {
+    dispatch(uprawyThunk.remove(id));
   };
 
   const handlePageChange = (pageNumber: number) => {
@@ -128,16 +139,15 @@ const page = () => {
           onPageChange={handlePageChange}
         />
       )}
-      {/* 
       {itemToDelete && (
         <DeleteConfirmationAndNotification
           item={itemToDelete}
           onBack={closeDeleteConfirmation}
           onDelete={handleDelete}
           afterDelete={afterDelete}
-          loadingState={poleRemoveState.loading}
+          loadingState={uprawyRemoveState.loading}
         />
-      )} */}
+      )}
     </div>
   );
 };
