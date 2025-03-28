@@ -10,6 +10,7 @@ import ItemRow from "@/components/ItemRow";
 import ItemsListHeader from "@/components/ItemsListHeader";
 import ItemCard from "@/components/ItemCard";
 import { CirclePlus } from "lucide-react";
+import ErrorBoundary from "@/components/ErrorBoundary";
 
 const page = () => {
   const dispatch = useAppDispatch();
@@ -106,15 +107,16 @@ const page = () => {
             items={["Nazwa", "Zasiano", "Zebrano", "Zbiór", "Czy rośnie"]}
           />
           <tbody>
-            {currentItems.map((item: UprawySchema) => (
-              <ItemRow
-                key={item.id}
-                item={item}
-                onViewDetails={handleViewDetails}
-                onEdit={handleEdit}
-                onDelete={displayDeleteConfirmation}
-              />
-            ))}
+            {currentItems &&
+              currentItems.map((item: UprawySchema) => (
+                <ItemRow
+                  key={item.id}
+                  item={item}
+                  onViewDetails={handleViewDetails}
+                  onEdit={handleEdit}
+                  onDelete={displayDeleteConfirmation}
+                />
+              ))}
           </tbody>
         </table>
       </div>

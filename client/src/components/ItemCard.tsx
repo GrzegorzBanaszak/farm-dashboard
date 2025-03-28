@@ -16,6 +16,7 @@ const ItemCard: FC<IItemCardProps> = ({
   onViewDetails,
   titles,
 }) => {
+  console.log(item);
   const { id, ...rest } = item;
 
   const dispalyValue = (value: any) => {

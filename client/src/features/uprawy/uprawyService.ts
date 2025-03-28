@@ -3,6 +3,7 @@ import UprawySchema from "./types/UprawySchema";
 import { constants } from "../../utils/constants";
 import AddUprawySchema from "./types/AddUprawySchema";
 import UpdateUprawySchema from "./types/UpdateUprawySchema";
+import UprawyDetailSchema from "./types/UprawyDetailSchema";
 
 const UPRAWY_URL = `${constants.API_URL}/crop`;
 
@@ -11,7 +12,7 @@ const getAll = async (): Promise<UprawySchema[]> => {
   return res.data;
 };
 
-const getOne = async (id: string): Promise<UprawySchema> => {
+const getOne = async (id: string): Promise<UprawyDetailSchema> => {
   const res = await axios.get(`${UPRAWY_URL}/${id}`, { withCredentials: true });
   return res.data;
 };

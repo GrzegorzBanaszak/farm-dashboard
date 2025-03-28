@@ -7,7 +7,7 @@ import LoadingSpinner from "@/components/LoadingSpinner";
 import Pagination from "@/components/Pagination";
 import { clearPoleDeleteState } from "@/features/pola/polaSlice";
 import { polaThunk } from "@/features/pola/polaThunk";
-import PolaSchema from "@/features/pola/types/PolaSchema";
+import PolaSchema from "@/features/pola/types/PolaSchema.1";
 import LoadingState from "@/types/LoadingState";
 import { CirclePlus } from "lucide-react";
 import { useEffect, useState } from "react";

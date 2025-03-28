@@ -1,10 +1,11 @@
-import PolaSchema from "../../pola/types/PolaSchema";
+import PolaSchema from "@/features/pola/types/PolaSchema.1";
+import { UprawyType } from "./UprawyType";
 
 export default interface UprawyDetailSchema {
   id: string;
-  type: string;
-  plantedAt: Date | string;
-  harvestedAt: Date | string;
-  yield: number;
-  field: PolaSchema | null;
+  type: UprawyType;
+  plantedAt: string;
+  harvestedAt: string | null;
+  yield: number | null;
+  field: PolaSchema;
 }
