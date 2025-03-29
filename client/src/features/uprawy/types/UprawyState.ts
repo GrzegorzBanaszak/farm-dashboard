@@ -1,4 +1,5 @@
 import RequestState from "../../../types/RequestState";
+import UprawyDetailSchema from "./UprawyDetailSchema";
 import UprawySchema from "./UprawySchema";
 
 export default interface UprawyState {
@@ -7,7 +8,7 @@ export default interface UprawyState {
     state: RequestState;
   };
   uprawyDetails: {
-    data: UprawySchema;
+    data: UprawyDetailSchema;
     state: RequestState;
   };
   uprawyCreateState: RequestState;

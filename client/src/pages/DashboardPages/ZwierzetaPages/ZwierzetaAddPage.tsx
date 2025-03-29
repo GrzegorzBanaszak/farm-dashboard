@@ -15,7 +15,7 @@ import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const ZwierzetaAddPage = () => {
-  const { zwierzetaCreateState } = useAppSelector((state) => state.zwierzeta);
+  const { zwierzetaCreateState } = useAppSelector(state => state.zwierzeta);
   const nav = useNavigate();
   const dispatch = useAppDispatch();
   const [item, setItem] = useState<AddZwierzetaSchema>({
@@ -98,7 +98,7 @@ const ZwierzetaAddPage = () => {
           value={item.specie}
           id="specie"
           name="specie"
-          onChange={(value) => handleEnumSelectChange("specie", value)}
+          onChange={value => handleEnumSelectChange("specie", value)}
           required={true}
         />
         <EnumSelect
@@ -107,7 +107,7 @@ const ZwierzetaAddPage = () => {
           value={item.health!}
           id="health"
           name="health"
-          onChange={(value) => handleEnumSelectChange("health", value)}
+          onChange={value => handleEnumSelectChange("health", value)}
           required={false}
         />
 

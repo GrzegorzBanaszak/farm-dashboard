@@ -24,6 +24,9 @@ import ZwierzetaEditPage from "./pages/DashboardPages/ZwierzetaPages/ZwierzetaEd
 import MaszynyAddPage from "./pages/DashboardPages/MaszynyPages/MaszynyAddPage";
 import MaszynyEditPage from "./pages/DashboardPages/MaszynyPages/MaszynyEditPage";
 import MaszynyDetailPage from "./pages/DashboardPages/MaszynyPages/MaszynyDetailPage";
+import UprawaDetailPage from "./pages/DashboardPages/UprawyPages/UprawaDetailPage";
+import UprawaAddPage from "./pages/DashboardPages/UprawyPages/UprawaAddPage";
+import UprawaEditPage from "./pages/DashboardPages/UprawyPages/UprawaEditPage";
 
 function App() {
   return (
@@ -38,7 +41,12 @@ function App() {
         </Route>
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route path="/dashboard/szczegoly" element={<DashboardDetails />} />
-          <Route path="/dashboard/uprawy" element={<UprawyPages />} />
+          <Route path="/dashboard/uprawy">
+            <Route index element={<UprawyPages />} />
+            <Route path=":itemId" element={<UprawaDetailPage />} />
+            <Route path="add" element={<UprawaAddPage />} />
+            <Route path=":itemId/edit" element={<UprawaEditPage />} />
+          </Route>
           <Route path="/dashboard/pola">
             <Route index element={<PolaPages />} />
             <Route path="add" element={<PoleAddPage />} />
