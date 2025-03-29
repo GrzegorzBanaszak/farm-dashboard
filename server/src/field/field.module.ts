@@ -8,5 +8,6 @@ import { CropModule } from 'src/crop/crop.module';
   imports: [PrismaModule, CropModule],
   controllers: [FieldController],
   providers: [FieldService],
+  exports: [FieldService],
 })
 export class FieldModule {}

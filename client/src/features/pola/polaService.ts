@@ -1,7 +1,7 @@
 import { constants } from "../../utils/constants";
 import AddPoleSchema from "./types/AddPoleSchema";
 import EditPoleSchema from "./types/EditPoleSchema";
-import PolaSchema from "./types/PolaSchema.1";
+import PolaSchema from "./types/PolaSchema";
 import axios from "axios";
 import PoleDetailSchema from "./types/PoleDetailSchema";
 

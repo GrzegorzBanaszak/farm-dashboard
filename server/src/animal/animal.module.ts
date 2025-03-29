@@ -7,5 +7,6 @@ import { PrismaModule } from 'src/prisma/prisma.module';
   imports: [PrismaModule],
   controllers: [AnimalController],
   providers: [AnimalService],
+  exports: [AnimalService],
 })
 export class AnimalModule {}

@@ -7,5 +7,6 @@ import { PrismaModule } from 'src/prisma/prisma.module';
   imports: [PrismaModule],
   controllers: [MachineController],
   providers: [MachineService],
+  exports: [MachineService],
 })
 export class MachineModule {}

@@ -9,7 +9,7 @@ import LoadingState from "@/types/LoadingState";
 const DashboardLayout = () => {
   const nav = useNavigate();
   const dispatch = useAppDispatch();
-  const { getUserState } = useAppSelector((state) => state.auth);
+  const { getUserState } = useAppSelector(state => state.auth);
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const toggleSidebar = () => {
@@ -27,7 +27,7 @@ const DashboardLayout = () => {
   }, [getUserState.loading]);
 
   return (
-    <div className="font-nunito flex flex-col h-screen bg-gray-100 ">
+    <div className="font-nunito flex flex-col lg:h-screen bg-gray-100 ">
       {/* Górny pasek */}
       <DashboardNavbar toggleSidebar={toggleSidebar} />
 
@@ -39,7 +39,7 @@ const DashboardLayout = () => {
 
         {/* Główna zawartość */}
         <main className="flex-1 overflow-y-auto p-4 bg-gray-100">
-          <div className="container mx-auto h-full">
+          <div className="container mx-auto h-auto">
             <Outlet />
           </div>
         </main>

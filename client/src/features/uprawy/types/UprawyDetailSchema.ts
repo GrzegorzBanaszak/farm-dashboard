@@ -1,4 +1,4 @@
-import PolaSchema from "@/features/pola/types/PolaSchema.1";
+import PolaSchema from "@/features/pola/types/PolaSchema";
 import { UprawyType } from "./UprawyType";
 
 export default interface UprawyDetailSchema {

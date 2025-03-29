@@ -4,6 +4,7 @@ import maszynyReducer from "../features/maszyny/maszynySlice";
 import uprawyReducer from "../features/uprawy/uprawySlice";
 import zwierzetaReducer from "../features/zwierzeta/zwierzetaSlice";
 import authReducer from "../features/auth/authSlice";
+import statsReducer from "../features/stats/statsSlice";
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     uprawy: uprawyReducer,
     zwierzeta: zwierzetaReducer,
     auth: authReducer,
+    stats: statsReducer,
   },
 });
 
