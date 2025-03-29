@@ -5,6 +5,7 @@ import { plainToInstance } from 'class-transformer';
 import { CreateAnimalDto } from './dto/create-animal.dto';
 import { HealthStatus } from '@prisma/client';
 import { UpdateAnimalDto } from './dto/update-animal.dto';
+import { CountType } from 'src/types/CountType';
 
 @Injectable()
 export class AnimalService {
@@ -92,5 +93,27 @@ export class AnimalService {
     } catch (error) {
       throw new NotFoundException('Nie znaleziono zwierzeńca');
     }
+  }
+
+  async countAnimals(): Promise<number> {
+    const count = await this.prisma.animal.count();
+    return count;
+  }
+
+  async aggregateAnimalsByType(): Promise<Record<string, CountType>> {
+    const animals = await this.prisma.animal.groupBy({
+      by: ['specie'],
+      _count: {
+        id: true,
+      },
+    });
+
+    return animals.reduce((acc, animal) => {
+      acc[animal.specie] = {
+        name: animal.specie,
+        count: animal._count.id,
+      };
+      return acc;
+    }, {});
   }
 }

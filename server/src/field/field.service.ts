@@ -108,4 +108,18 @@ export class FieldService {
       throw new NotFoundException('Nie udało się dodać uprawy');
     }
   }
+
+  async getFieldsNumberWhereCropIsGrowing(): Promise<number> {
+    const fields = await this.prisma.field.findMany({
+      where: {
+        crops: {
+          some: {
+            isGrowing: true,
+          },
+        },
+      },
+    });
+
+    return fields.length;
+  }
 }

@@ -9,6 +9,7 @@ import { CropDto } from './dto/crop.dto';
 import { plainToInstance } from 'class-transformer';
 import { CreateCropDto } from './dto/create-crop.dto';
 import { UpdateCropDto } from './dto/update-crop.dto';
+import { CountType } from 'src/types/CountType';
 
 @Injectable()
 export class CropService {
@@ -52,9 +53,7 @@ export class CropService {
 
       if (!field) throw new NotFoundException('Nie znaleziono pola');
 
-      const isGrowing = data.harvestedAt ? true : false;
-
-      console.log(isGrowing);
+      const isGrowing = data.harvestedAt ? false : true;
 
       if (isGrowing) {
         const crops = await this.prisma.crop.findMany({
@@ -62,7 +61,7 @@ export class CropService {
         });
 
         if (crops.length > 0) {
-          throw new NotFoundException('Pole jest juz zajęte');
+          throw new BadRequestException('Pole jest juz zajęte');
         }
       }
 
@@ -158,5 +157,44 @@ export class CropService {
     } catch (error) {
       throw new InternalServerErrorException('Bład serwera');
     }
+  }
+
+  async getYieldByYear(year: number): Promise<number> {
+    const startDate = new Date(`${year}-01-01T00:00:00.000Z`);
+    const endDate = new Date(`${year + 1}-01-01T00:00:00.000Z`);
+
+    const yieldNumber = await this.prisma.crop.aggregate({
+      _sum: {
+        yield: true,
+      },
+      where: {
+        isGrowing: false,
+        harvestedAt: {
+          gte: startDate,
+          lte: endDate,
+        },
+      },
+    });
+
+    if (!yieldNumber._sum.yield) return 0;
+
+    return yieldNumber._sum.yield;
+  }
+
+  async groupCropsByType(): Promise<Record<string, CountType>> {
+    const crops = await this.prisma.crop.groupBy({
+      by: ['type'],
+      _count: {
+        id: true,
+      },
+    });
+
+    return crops.reduce((acc, crop) => {
+      acc[crop.type] = {
+        name: crop.type,
+        count: crop._count.id,
+      };
+      return acc;
+    }, {});
   }
 }

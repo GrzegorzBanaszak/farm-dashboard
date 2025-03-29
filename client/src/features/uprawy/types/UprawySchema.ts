@@ -1,4 +1,4 @@
-import PolaSchema from "@/features/pola/types/PolaSchema.1";
+import PolaSchema from "@/features/pola/types/PolaSchema";
 
 export default interface UprawySchema {
   id: string;

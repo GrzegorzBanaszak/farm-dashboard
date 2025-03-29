@@ -90,4 +90,9 @@ export class MachineService {
       throw new NotFoundException('Nie znaleziono maszyny');
     }
   }
+
+  async countMachines(): Promise<number> {
+    const count = await this.prisma.machine.count();
+    return count;
+  }
 }

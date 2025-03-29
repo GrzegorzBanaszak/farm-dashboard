@@ -2,7 +2,7 @@ import { ActionReducerMapBuilder, createSlice } from "@reduxjs/toolkit";
 import PolaState from "./types/PolaState";
 import { polaThunk } from "./polaThunk";
 import mapToRecord from "../../utils/mapToRecord";
-import PolaSchema from "./types/PolaSchema.1";
+import PolaSchema from "./types/PolaSchema";
 import LoadingState from "../../types/LoadingState";
 
 const initialState: PolaState = {

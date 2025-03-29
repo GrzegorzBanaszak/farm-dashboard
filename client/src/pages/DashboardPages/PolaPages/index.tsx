@@ -7,7 +7,7 @@ import LoadingSpinner from "@/components/LoadingSpinner";
 import Pagination from "@/components/Pagination";
 import { clearPoleDeleteState } from "@/features/pola/polaSlice";
 import { polaThunk } from "@/features/pola/polaThunk";
-import PolaSchema from "@/features/pola/types/PolaSchema.1";
+import PolaSchema from "@/features/pola/types/PolaSchema";
 import LoadingState from "@/types/LoadingState";
 import { CirclePlus } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -18,7 +18,7 @@ const ItemsList = () => {
   const { pola, poleRemoveState } = useAppSelector(state => state.pola);
   const [items, setItems] = useState<PolaSchema[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(5);
+  const [itemsPerPage] = useState(10);
   const [itemToDelete, setItemToDelete] = useState<PolaSchema | null>(null);
 
   const nav = useNavigate();
