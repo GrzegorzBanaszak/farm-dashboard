@@ -1,16 +1,14 @@
-FROM node:20.14.0-alpine 
+FROM node:22.14.0-alpine
 
-# Ustaw katalog roboczy
+
 WORKDIR /app
 
-# Skopiuj package.json i package-lock.json
 COPY package*.json ./
 
-# Zainstaluj zależności
 RUN npm install
 
-# Skopiuj całą aplikację
 COPY . .
 
-# Uruchom aplikację
-CMD ["npm", "run", "dev", "--", "--host"]
+EXPOSE 5173
+
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]

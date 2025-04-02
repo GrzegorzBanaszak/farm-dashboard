@@ -16,7 +16,7 @@ async function bootstrap() {
   );
 
   app.enableCors({
-    origin: 'http://localhost:5173', // adres, pod którym działa Twoja aplikacja React
+    origin: ['http://localhost:5173',"http://client:5173"], // adres, pod którym działa Twoja aplikacja React
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true, // włącz, jeśli przesyłasz ciasteczka lub nagłówki autoryzacyjne
   });
