@@ -1,30 +1,14 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import DashboardNavbar from "../components/DashboardNavbar";
 import DashboardSidebar from "../components/DashboardSidebar";
-import { Outlet, useNavigate } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import { authThunk } from "@/features/auth/authThunk";
-import LoadingState from "@/types/LoadingState";
+import { Outlet } from "react-router-dom";
 
 const DashboardLayout = () => {
-  const nav = useNavigate();
-  const dispatch = useAppDispatch();
-  const { getUserState } = useAppSelector(state => state.auth);
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
-
-  useEffect(() => {
-    dispatch(authThunk.getUser());
-  }, []);
-
-  useEffect(() => {
-    if (getUserState.loading === LoadingState.FAILED) {
-      nav("/login");
-    }
-  }, [getUserState.loading]);
 
   return (
     <div className="font-nunito flex flex-col lg:h-screen bg-gray-100 ">

@@ -39,7 +39,14 @@ function App() {
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/contact" element={<Contact />} />
         </Route>
-        <Route path="/dashboard" element={<DashboardLayout />}>
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectionRoute>
+              <DashboardLayout />
+            </ProtectionRoute>
+          }
+        >
           <Route path="/dashboard/szczegoly" element={<DashboardDetails />} />
           <Route path="/dashboard/uprawy">
             <Route index element={<UprawyPages />} />
@@ -67,22 +74,8 @@ function App() {
             <Route path=":itemId/edit" element={<ZwierzetaEditPage />} />
           </Route>
         </Route>
-        <Route
-          path="/login"
-          element={
-            <ProtectionRoute pathTo="/dashboard/szczegoly">
-              <Login />
-            </ProtectionRoute>
-          }
-        />
-        <Route
-          path="/register"
-          element={
-            <ProtectionRoute pathTo="/dashboard/szczegoly">
-              <RegisterPage />
-            </ProtectionRoute>
-          }
-        />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<RegisterPage />} />
         <Route path="*" element={<div>404</div>} />
       </Routes>
     </BrowserRouter>

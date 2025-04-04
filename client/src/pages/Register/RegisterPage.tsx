@@ -1,17 +1,29 @@
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
+import { cleanError } from "@/features/auth/authSlice";
 import { authThunk } from "@/features/auth/authThunk";
 import RegisterSchema from "@/features/auth/types/RegisterSchema";
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const RegisterPage = () => {
   const dispatch = useAppDispatch();
-  const { registerState } = useAppSelector((state) => state.auth);
+  const { globalState, isAuthenticated } = useAppSelector(state => state.auth);
+  const navigate = useNavigate();
   const [formData, setFormData] = useState<RegisterSchema>({
     email: "",
     password: "",
     confirmPassword: "",
   });
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/dashboard");
+    }
+  }, [isAuthenticated, navigate]);
+
+  useEffect(() => {
+    dispatch(cleanError());
+  }, [dispatch]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -123,7 +135,7 @@ const RegisterPage = () => {
                 required
               />
             </div>
-            {registerState.error && (
+            {globalState.error && (
               <div className="text-red-500 font-black  my-4">
                 Nieprawidłowy dane rejestracji
               </div>

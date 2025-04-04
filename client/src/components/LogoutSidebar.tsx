@@ -1,14 +1,13 @@
 import { useAppDispatch } from "@/app/hooks";
 import { authThunk } from "@/features/auth/authThunk";
+
 import { LogInIcon } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 
 const LogoutSidebar = () => {
-  const nav = useNavigate();
   const dispatch = useAppDispatch();
+
   const logoutHandler = async () => {
-    await dispatch(authThunk.logout());
-    nav("/login");
+    dispatch(authThunk.logout());
   };
   return (
     <div className="flex group cursor-pointer" onClick={logoutHandler}>

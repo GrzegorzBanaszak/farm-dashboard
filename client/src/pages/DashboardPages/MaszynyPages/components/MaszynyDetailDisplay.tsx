@@ -51,7 +51,7 @@ const MaszynyDetailDisplay: FC<MaszynyDetailDisplayProps> = ({ item }) => {
                 <DetailSection label="Stan maszyny" value={item.condition} />
                 <DetailSection
                   label="Data zakupu"
-                  value={item.purchaseDate.toLocaleString("pl-PL")}
+                  value={new Date(item.purchaseDate).toLocaleString("pl-PL")}
                 />
               </div>
             </div>
