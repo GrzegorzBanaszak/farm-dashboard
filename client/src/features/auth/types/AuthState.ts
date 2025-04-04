@@ -3,7 +3,6 @@ import RequestState from "@/types/RequestState";
 
 export default interface AuthState {
   user: UserSchema | null;
-  registerState: RequestState;
-  loginState: RequestState;
-  getUserState: RequestState;
+  globalState: RequestState;
+  isAuthenticated: boolean;
 }

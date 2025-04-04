@@ -5,82 +5,85 @@ import { authThunk } from "./authThunk";
 
 const initialState: AuthState = {
   user: null,
-  registerState: { loading: LoadingState.IDLE, error: false, messages: [] },
-  loginState: { loading: LoadingState.IDLE, error: false, messages: [] },
-  getUserState: { loading: LoadingState.IDLE, error: false, messages: [] },
+  isAuthenticated: false,
+  globalState: { loading: LoadingState.IDLE, error: false, messages: [] },
 };
 
 const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    resetAuthState: (state) => {
-      state.registerState = {
+    resetAuthState: state => {
+      state.globalState = {
         loading: LoadingState.IDLE,
         error: false,
         messages: [],
       };
-      state.loginState = {
-        loading: LoadingState.IDLE,
-        error: false,
-        messages: [],
-      };
-      state.getUserState = {
-        loading: LoadingState.IDLE,
-        error: false,
-        messages: [],
-      };
+      state.user = null;
+      state.isAuthenticated = false;
+    },
+    cleanError: state => {
+      state.globalState.error = false;
+      state.globalState.messages = [];
     },
   },
   extraReducers: (builder: ActionReducerMapBuilder<AuthState>) => {
     builder
       .addCase(authThunk.login.pending, (state, _) => {
-        state.loginState.loading = LoadingState.PENDING;
+        state.globalState.loading = LoadingState.PENDING;
       })
       .addCase(authThunk.login.fulfilled, (state, action) => {
         state.user = action.payload;
-        state.loginState.loading = LoadingState.SUCCEEDED;
+        state.globalState.loading = LoadingState.SUCCEEDED;
+        state.isAuthenticated = true;
       })
       .addCase(authThunk.login.rejected, (state, action) => {
-        state.loginState.loading = LoadingState.FAILED;
-        state.loginState.error = true;
-        state.loginState.messages = [action.payload as string];
+        state.globalState.loading = LoadingState.FAILED;
+        state.globalState.error = true;
+        state.globalState.messages = [action.payload as string];
+        state.isAuthenticated = false;
       });
 
     builder
       .addCase(authThunk.register.pending, (state, _) => {
-        state.registerState.loading = LoadingState.PENDING;
+        state.globalState.loading = LoadingState.PENDING;
       })
       .addCase(authThunk.register.fulfilled, (state, action) => {
         state.user = action.payload;
-        state.registerState.loading = LoadingState.SUCCEEDED;
+        state.globalState.loading = LoadingState.SUCCEEDED;
+        state.isAuthenticated = true;
       })
       .addCase(authThunk.register.rejected, (state, action) => {
-        state.registerState.loading = LoadingState.FAILED;
-        state.registerState.error = true;
-        state.registerState.messages = [action.payload as string];
+        state.globalState.loading = LoadingState.FAILED;
+        state.globalState.error = true;
+        state.globalState.messages = [action.payload as string];
+        state.isAuthenticated = false;
       });
 
     builder
       .addCase(authThunk.getUser.pending, (state, _) => {
-        state.getUserState.loading = LoadingState.PENDING;
+        state.globalState.loading = LoadingState.PENDING;
       })
       .addCase(authThunk.getUser.fulfilled, (state, action) => {
         state.user = action.payload;
-        state.getUserState.loading = LoadingState.SUCCEEDED;
+        state.globalState.loading = LoadingState.SUCCEEDED;
+        state.isAuthenticated = true;
       })
       .addCase(authThunk.getUser.rejected, (state, action) => {
-        state.getUserState.loading = LoadingState.FAILED;
-        state.getUserState.error = true;
-        state.getUserState.messages = [action.payload as string];
+        state.globalState.loading = LoadingState.FAILED;
+        state.globalState.error = true;
+        state.globalState.messages = [action.payload as string];
+        state.isAuthenticated = false;
       });
 
     //Wylogowanie
     builder.addCase(authThunk.logout.fulfilled, (state, _) => {
+      state.globalState.loading = LoadingState.SUCCEEDED;
       state.user = null;
+      state.isAuthenticated = false;
     });
   },
 });
 
-export const { resetAuthState } = authSlice.actions;
+export const { resetAuthState, cleanError } = authSlice.actions;
 export default authSlice.reducer;
