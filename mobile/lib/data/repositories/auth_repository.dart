@@ -1,12 +1,9 @@
 import 'package:mobile/services/http_service.dart';
 import 'package:mobile/config/api_config.dart';
-import 'package:mobile/data/models/user_model.dart';
 import 'package:mobile/core/constants/app_constants.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class AuthRepository {
   final HttpService _httpService = HttpService();
-  final FlutterSecureStorage _secureStorage = FlutterSecureStorage();
 
   // Rejestracja użytkownika
   Future<Map<String, dynamic>> register(String email, String password) async {
@@ -48,8 +45,6 @@ class AuthRepository {
 
       if (response.statusCode == 200) {
         // Zapisujemy token w secure storage
-        await _secureStorage.write(
-            key: AppConstants.authTokenKey, value: 'jwt');
 
         return {
           'success': true,
@@ -100,13 +95,5 @@ class AuthRepository {
     } catch (e) {
       // Ignorujemy błędy przy wylogowywaniu
     }
-
-    await _secureStorage.delete(key: AppConstants.authTokenKey);
-  }
-
-  // Sprawdzanie, czy token istnieje
-  Future<bool> hasToken() async {
-    final token = await _secureStorage.read(key: AppConstants.authTokenKey);
-    return token != null;
   }
 }

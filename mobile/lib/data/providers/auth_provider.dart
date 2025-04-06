@@ -24,13 +24,14 @@ class AuthProvider with ChangeNotifier {
     try {
       final httpService = HttpService();
       await httpService.init();
+      _isLoading = true;
       final response = await _authRepository.getProfile();
 
       if (response['success']) {
         _user = response['user'];
         _isAuthenticated = true;
       } else {
-        // await logout();
+        await logout();
       }
     } catch (e) {
       await logout();

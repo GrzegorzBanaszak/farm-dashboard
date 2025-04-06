@@ -18,4 +18,6 @@ class ApiConfig {
   static String get register => '$baseUrl/auth/register';
   static String get profile => '$baseUrl/user/profile';
   static String get logout => '$baseUrl/auth/logout';
+
+  static String get allMachines => '$baseUrl/machine';
 }
