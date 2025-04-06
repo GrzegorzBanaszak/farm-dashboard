@@ -78,7 +78,6 @@ export class CropService {
       });
       return cropDto;
     } catch (error) {
-      console.log(error);
       throw new BadRequestException(error.message);
     }
   }

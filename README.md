@@ -23,6 +23,12 @@ Po stronie klienta:
 - Vite
 - Tailwind CSS
 
+Aplikacja mobilna
+
+- React Native
+- TypeScript
+- Expo
+
 ## Funkcjonalności
 
 - **Zarządzanie uprawami** – możliwość dodawania, edytowania i monitorowania upraw
@@ -112,16 +118,16 @@ Dodatkowo dla servera należy wygenerować servera należy zainstalować prisma 
 
 #### Client
 
-- [ ] Strona główna
+- [x] Strona główna
   - [x] Strona otwarcia
-  - [ ] O Nas
-  - [ ] Funkcje
-  - [ ] Cennik
-  - [ ] Kontakt
+  - [x] O Nas
+  - [x] Funkcje
+  - [x] Cennik
+  - [x] Kontakt
 - [x] Logowanie
 - [x] Rejestracja
-- [ ] Dashboard
-  - [ ] Strona głowna statystyki
+- [x] Dashboard
+  - [x] Strona głowna statystyki
   - [x] Pola
     - [x] Reducer i akcje
     - [x] Wyswietlanie listy pol
@@ -129,20 +135,20 @@ Dodatkowo dla servera należy wygenerować servera należy zainstalować prisma 
     - [x] Dodanie nowego pola
     - [x] Edycja pola
     - [x] Usuwanie pola
-  - [ ] Uprawy
+  - [x] Uprawy
     - [x] Reducer i akcje
-    - [ ] Wyswietlanie listy upraw
-    - [ ] Widok szczegolowy uprawy
-    - [ ] Dodanie nowej uprawy
-    - [ ] Edycja uprawy
-    - [ ] Usunięcie uprawy
-  - [ ] Maszyny
+    - [x] Wyswietlanie listy upraw
+    - [x] Widok szczegolowy uprawy
+    - [x] Dodanie nowej uprawy
+    - [x] Edycja uprawy
+    - [x] Usunięcie uprawy
+  - [x] Maszyny
     - [x] Reducer i akcje
-    - [ ] Wyswietlanie listy maszyn
-    - [ ] Widok szczegolowy maszyny
-    - [ ] Dodanie nowej maszyny
-    - [ ] Edycja maszyny
-    - [ ] Usunięcie maszyny
+    - [x] Wyswietlanie listy maszyn
+    - [x] Widok szczegolowy maszyny
+    - [x] Dodanie nowej maszyny
+    - [x] Edycja maszyny
+    - [x] Usunięcie maszyny
   - [x] Zwierzeta
     - [x] Reducer i akcje
     - [x] Wyswietlanie listy zwierzat
